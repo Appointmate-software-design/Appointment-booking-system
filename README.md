@@ -1,2 +1,2 @@
-# Appointment-booking-system
-Software design project where we are creating an appointment  booking system for a client
+# Appointmate
+An appointment booking system, beautifully designed to cater to our client's needs.
