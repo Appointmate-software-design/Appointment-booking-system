@@ -15,7 +15,7 @@ export default function CreateEventForm({handleClose}) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
+  
     const checkedDays = [];
     daysOfWeek.forEach((day) => {
       const checkbox = document.getElementById(day.toLowerCase());
@@ -25,34 +25,62 @@ export default function CreateEventForm({handleClose}) {
         checkedDays.push([day, startTime, endTime]);
       }
     });
-
+  
+    const title = document.querySelector('#title').value;
+    const description = document.querySelector('#description').value;
+    const duration = document.querySelector('#duration').value;
+    const startDate = document.querySelector('input[name="start-date"]').value;
+    const endDate = document.querySelector('input[name="end-date"]').value;
+  
+    // Perform validation checks
+    if (!title) {
+      alert("Please enter a title for your event.");
+      return;
+    }
+    if (!description) {
+      alert("Please enter a description for your event.");
+      return;
+    }
+    if (new Date(endDate) < new Date(startDate)) {
+      alert("End date cannot be earlier than start date.");
+      return;
+    }
+  
+    const selectedDays = checkedDays.map(([day, startTime, endTime]) => {
+      const start = new Date(`${startDate} ${startTime}`);
+      const end = new Date(`${endDate} ${endTime}`);
+      if (end <= start) {
+        alert(`Invalid time range selected for ${day}.`);
+        return null;
+      }
+      return { day, startTime, endTime };
+    }).filter((day) => day !== null);
+  
+    if (selectedDays.length === 0) {
+      alert("Please select at least one day for your event.");
+      return;
+    }
+  
     const formData = {
-    title: document.querySelector('#title').value,
-    description: document.querySelector('#description').value,
-    host: currentUser.uid,
-      duration: document.querySelector('#duration').value,
-      startDate: document.querySelector('input[name="start-date"]').value,
-      endDate: document.querySelector('input[name="end-date"]').value,
-      checkedDays: checkedDays
+      title,
+      description,
+      host: currentUser.uid,
+      duration,
+      startDate,
+      endDate,
+      checkedDays: selectedDays
     };
-
-    //validation here, before submitting to the database.
-    //make sure all things that can be submitted make sense
-    //there must be a title,description date selection must make sense, time selection must make sense - no wierd dates that go back in time, same is true for hours
-    //hours cannot be the same eg 7:00-7:00
-    //alert the user about these things
-    //only once all validation has occured, submit it to the database.
-
-    ///submition to the database
-    addDoc(eventsCollectionRef,formData).then(response => {
+  
+    // Only submit the form if all validation checks have passed
+    addDoc(eventsCollectionRef, formData).then(response => {
       console.log(response)
     }).catch(error => {
       console.log(error.message)
-    })
-
-
+    });
+  
     console.log(formData);
   }
+  
 
   return (
     <form className="create-event-form">
