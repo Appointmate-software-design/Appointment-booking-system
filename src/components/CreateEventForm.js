@@ -22,57 +22,38 @@ export default function CreateEventForm({handleClose}) {
       if (checkbox.checked) {
         const startTime = document.getElementById(`${day.toLowerCase()}-start-time`).value;
         const endTime = document.getElementById(`${day.toLowerCase()}-end-time`).value;
+        if (startTime >= endTime) {
+          alert(`Invalid time range selected for ${day}. Start time must be earlier than end time.`);
+          return;
+        }
         checkedDays.push([day, startTime, endTime]);
       }
     });
   
-    const title = document.querySelector('#title').value;
-    const description = document.querySelector('#description').value;
-    const duration = document.querySelector('#duration').value;
-    const startDate = document.querySelector('input[name="start-date"]').value;
-    const endDate = document.querySelector('input[name="end-date"]').value;
-  
-    // Perform validation checks
-    if (!title) {
-      alert("Please enter a title for your event.");
-      return;
-    }
-    if (!description) {
-      alert("Please enter a description for your event.");
-      return;
-    }
-    if (new Date(endDate) < new Date(startDate)) {
-      alert("End date cannot be earlier than start date.");
+    if (!document.querySelector('#title').value) {
+      alert('Please enter a title for the event.');
       return;
     }
   
-    const selectedDays = checkedDays.map(([day, startTime, endTime]) => {
-      const start = new Date(`${startDate} ${startTime}`);
-      const end = new Date(`${endDate} ${endTime}`);
-      if (end <= start) {
-        alert(`Invalid time range selected for ${day}.`);
-        return null;
-      }
-      return { day, startTime, endTime };
-    }).filter((day) => day !== null);
-  
-    if (selectedDays.length === 0) {
-      alert("Please select at least one day for your event.");
+    const startDate = new Date(document.querySelector('input[name="start-date"]').value);
+    const endDate = new Date(document.querySelector('input[name="end-date"]').value);
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || startDate > endDate) {
+      alert('Invalid date range selected. Please select valid start and end dates.');
       return;
     }
   
     const formData = {
-      title,
-      description,
+      title: document.querySelector('#title').value,
+      description: document.querySelector('#description').value,
       host: currentUser.uid,
-      duration,
-      startDate,
-      endDate,
-      checkedDays: selectedDays
+      duration: document.querySelector('#duration').value,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      checkedDays: checkedDays
     };
   
-    // Only submit the form if all validation checks have passed
-    addDoc(eventsCollectionRef, formData).then(response => {
+    // submit form data to the database
+    addDoc(eventsCollectionRef,formData).then(response => {
       console.log(response)
     }).catch(error => {
       console.log(error.message)
@@ -80,6 +61,7 @@ export default function CreateEventForm({handleClose}) {
   
     console.log(formData);
   }
+  
   
 
   return (
