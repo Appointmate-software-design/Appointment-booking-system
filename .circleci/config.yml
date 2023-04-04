@@ -1,6 +1,5 @@
 version: 2.1
 jobs:
-  say-hello
   build:
     docker:
       - image: circleci/python:3.8
@@ -17,13 +16,11 @@ jobs:
             coverage run -m pytest
             coverage xml
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          
           name: Upload coverage report to Codecov
           command: bash <(curl -s https://codecov.io/bash)
 workflows:
-  say-hello-workflow
+  
   build:
     jobs:
-      - say-hello 
       - build
