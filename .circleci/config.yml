@@ -16,11 +16,12 @@ jobs:
             coverage run -m pytest
             coverage xml
       - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
           name: Upload coverage report to Codecov
           command: bash <(curl -s https://codecov.io/bash)
 workflows:
   build:
     jobs:
-        name: "Say hello"
-        command: "echo Hello, World!"
+      - say-hello 
       - build
