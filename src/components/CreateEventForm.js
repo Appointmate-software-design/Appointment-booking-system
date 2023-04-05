@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './CreateEventForm.css';
 import { useAuth } from '../contexts/AuthContext';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 
 
-export default function CreateEventForm({handleClose}) {
+export default function CreateEventForm() {
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const hours = Array.from({ length: 13 }, (_, i) => `${i + 6}:00`);
+  const hours = Array.from({ length: 13 }, (_, i) => `${i + 6}:00`); // hours can only be from 6:00 am to 
   const {currentUser} = useAuth();
   const eventsCollectionRef = collection(db,"events");
+  const navigate = useNavigate();
+  // Initialize state for start/end time validation
+  const [validStartEndTimes, setValidStartEndTimes] = useState(true);
+
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -21,72 +26,76 @@ export default function CreateEventForm({handleClose}) {
       if (checkbox.checked) {
         const startTime = document.getElementById(`${day.toLowerCase()}-start-time`).value;
         const endTime = document.getElementById(`${day.toLowerCase()}-end-time`).value;
-        checkedDays.push([day, startTime, endTime]);
+        
+        checkedDays.push({day, startTime, endTime}); // checked day has day e.g Monday, a startTime and an endTime
       }
+
     });
   
-    const title = document.querySelector('#title').value;
-    const description = document.querySelector('#description').value;
-    const duration = document.querySelector('#duration').value;
-    const startDate = document.querySelector('input[name="start-date"]').value;
-    const endDate = document.querySelector('input[name="end-date"]').value;
-  
-    // Perform validation checks
-    if (!title) {
-      alert("Please enter a title for your event.");
+    
+    const startDateInput = document.querySelector('input[name="start-date"]');
+    const endDateInput = document.querySelector('input[name="end-date"]');
+    const startDateString = startDateInput.value;
+    const endDateString = endDateInput.value;
+    //validation 
+
+    if (!startDateString || !endDateString) {
+      alert('Please fill in both start and end dates');
       return;
     }
-    if (!description) {
-      alert("Please enter a description for your event.");
+
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      alert('Please enter valid date strings in the format YYYY-MM-DD');
       return;
     }
-    if (new Date(endDate) < new Date(startDate)) {
-      alert("End date cannot be earlier than start date.");
-      return;
-    }
-  
-    const selectedDays = checkedDays.map(([day, startTime, endTime]) => {
-      const startDateTime = new Date(`${startDate} ${startTime}`);
-      const endDateTime = new Date(`${endDate} ${endTime}`);
-      if (endDateTime.getTime() <= startDateTime.getTime()) {
-        alert(`Invalid time range selected for ${day}.`);
-        return null;
-      }
-      const start = new Date(startDateTime.getTime());
-      start.setDate(start.getDate() + (daysOfWeek.indexOf(day) - start.getDay() + 7) % 7);
-      const end = new Date(endDateTime.getTime());
-      end.setDate(end.getDate() + (daysOfWeek.indexOf(day) - end.getDay() + 7) % 7);
-      if (end <= start) {
-        alert(`Invalid time range selected for ${day}.`);
-        return null;
-      }
-      return { day, startTime, endTime, start, end };
-    }).filter((day) => day !== null);
-  
-    if (selectedDays.length === 0) {
-      alert("Please select at least one day for your event.");
-      return;
-    }
+
   
     const formData = {
-      title,
-      description,
+      title: document.querySelector('#title').value,
+      description: document.querySelector('#description').value,
       host: currentUser.uid,
-      duration,
-      startDate,
-      endDate,
-      checkedDays: selectedDays
+      duration: document.querySelector('#duration').value,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      checkedDays: checkedDays
     };
-  
-    // Only submit the form if all validation checks have passed
-    addDoc(eventsCollectionRef, formData).then(response => {
-      console.log(response)
-    }).catch(error => {
-      console.log(error.message)
-    });
-  
-    console.log(formData);
-  }
+
+    function timeToMinutes(timeString) {
+      const [hours, minutes] = timeString.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+    
+
+    // Form validation
+    if (formData.title === '') {
+      alert('Please fill in title field');
+    } else if (formData.description === '') {
+      alert('Please fill in description field');
+    } else if (new Date(formData.startDate) >= new Date(formData.endDate)) {
+      alert('Please enter a valid date range');
+    } else if (formData.checkedDays.length === 0) {
+      alert('No days have been checked');
+    } else if (formData.checkedDays.some((day) => timeToMinutes(day.startTime) >= timeToMinutes(day.endTime))
+    ){
+      alert('Please select valid start times and end times');
+    } else {
+      // Submit form data
+      addDoc(eventsCollectionRef, formData)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.message)
+        });
+        // once we have clicked submit, and the form is validated correctly and the data is submitted
+      // we should be taken back to the home page
+      navigate('/')
+    }
+    
+}
   
   
 
@@ -115,7 +124,7 @@ export default function CreateEventForm({handleClose}) {
       <input type="date" id="end-date" name="end-date" />
 
       <div>
-        {daysOfWeek.map((day) => (
+        {daysOfWeek.map((day) => ( //for each day, create a check box, a select for start time and a select for end time
           <div key={day.toLowerCase()}>
             <input type="checkbox" id={day.toLowerCase()} name={day.toLowerCase()} />
             <label htmlFor={day.toLowerCase()}>{day}</label>
@@ -137,18 +146,9 @@ export default function CreateEventForm({handleClose}) {
           </div>
         ))}
         <br />
-        <button onClick={handleSubmit}>Submit</button> <button onClick={handleClose}>Close</button>
+        <button onClick={handleSubmit}>Submit</button> <button onClick={() => {navigate('/')}}>Close</button> {/*if you click close, you will be navigated back to home*/}
 
       </div>
     </form>
   );
 }
-
-
-
-
-
-
-
-
-

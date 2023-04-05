@@ -3,4 +3,12 @@
     z-index: 1;
   }
 
+  .events-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+ 
+  
   

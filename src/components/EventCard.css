@@ -1,0 +1,51 @@
+.EventCard {
+    border: 2px solid teal;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+
+  }
+  
+  .EventCard ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+  
+  .EventCard ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .EventCard strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+
+  .delete-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: steelblue;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: normal;
+  }
+  
+  .delete-button:before {
+    content: 'X ';
+    color: red;
+    font-weight: bold;
+  }
+  
+  

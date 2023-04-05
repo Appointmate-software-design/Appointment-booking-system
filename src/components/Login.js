@@ -18,7 +18,7 @@ const [loading, setLoading] = useState(false)
     setError('')
     setLoading(true)
     await login(emailRef.current.value, passwordRef.current.value)
-    navigate('/home')//on a successful login, move to home page
+    navigate('/')//on a successful login, move to home page
     } catch (error) {
         console.log(error.code)
         if(error.code === "auth/wrong-password"){

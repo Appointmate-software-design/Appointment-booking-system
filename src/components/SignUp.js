@@ -22,7 +22,7 @@ const navigate = useNavigate()
     setError('')
     setLoading(true)
     await signup(emailRef.current.value, passwordRef.current.value)
-    navigate('/home')//after a successful sign up
+    navigate('/')//after a successful sign up
     } catch (error) {
         console.log(error.code)
         //throw error;
