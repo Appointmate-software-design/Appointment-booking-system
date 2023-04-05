@@ -12,4 +12,32 @@ code {
     monospace;
 }
 
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+}
 
+.loading p {
+  margin-top: 16px;
+  font-size: 18px;
+}
+
+/* Center the spinner horizontally */
+.react-spinner__clip-loader {
+  margin: 0 auto;
+}
+
+/* Center the spinner vertically */
+.react-spinner__clip-loader {
+  display: inline-block;
+  vertical-align: middle;
+}
