@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import ShowLinkButton from './ShowLinkButton';
 import './EventCard.css';
 
+// the purpose of the below function is to define a function that can be used to delete a specific document from our Firebase database.
 export default function EventCard({ eventData }) {
   const handleDelete = async () => {
     await deleteDoc(doc(collection(db, 'events'), eventData.id));
