@@ -5,6 +5,8 @@ import { useNavigate, Routes, Route, Outlet } from 'react-router-dom';
 import ScheduledEvents from './ScheduledEvents';
 import EventList from './EventList';
 
+//this file has two buttons, "Scheduled Events" and "Events" and keeps track of which one is active
+
 export default function Home() {
 
   const [error, setError] = useState("")
