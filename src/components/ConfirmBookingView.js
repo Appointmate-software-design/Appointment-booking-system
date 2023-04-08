@@ -80,7 +80,7 @@ export default function ConfirmBookingView() {
         startDate={new Date(event.startDate)}
         endDate={new Date(event.endDate)}
       />
-      
+{/* if a day is selected, check if it is in the meeting schedule, if it is then show the relevant time slots, otherwise say "The day selected is not in the meeting schedule"  */}
       {selectedDate && availableTimes && calculateTimeSlots(availableTimes.startTime, availableTimes.endTime, event.duration).length > 0 ? (
         calculateTimeSlots(availableTimes.startTime, availableTimes.endTime, event.duration).map((slot) => (
           <div key={`${slot.start}-${slot.end}`} style={{ marginTop: "10px", marginLeft: "10px" }}>

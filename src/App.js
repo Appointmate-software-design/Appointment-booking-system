@@ -7,7 +7,7 @@ import CreateEventForm from './components/CreateEventForm'
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import ConfirmBookingView from './components/ConfirmBookingView'
-import PrivateRoute from "./components/PrivateRoute"; //this is so we can't acces the home page when we log out
+import PrivateRoute from "./components/PrivateRoute"; //this is so we can't access certain pages when we are logged out.
 function App() {
   return (
     <div className="App">
