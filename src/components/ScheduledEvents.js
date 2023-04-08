@@ -1,5 +1,7 @@
 import React from 'react'
 
+// for sprint 2
+
 export default function ScheduledEvents() {
   return (
     <div>
