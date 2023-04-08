@@ -1,5 +1,7 @@
 import React from 'react'
 
+// this component is the Title component and appears on every page, it contains the logo and the word "appointmate", the name of our app
+
 export default function Title() {
     return (
         <div style={{ padding: '2rem', position: 'relative', textAlign: 'center' }}>
