@@ -9,12 +9,21 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CreateEventForm() {
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const hours = Array.from({ length: 13 }, (_, i) => `${i + 6}:00`); // hours can only be from 6:00 am to 
+  const hours = Array.from({ length: 13 }, (_, i) => `${i + 6}:00`); // hours can only be from 6:00 am to 18:00 pm
   const {currentUser} = useAuth();
   const eventsCollectionRef = collection(db,"events");
   const navigate = useNavigate();
   // Initialize state for start/end time validation
   const [validStartEndTimes, setValidStartEndTimes] = useState(true);
+  
+  // an event creation from has the following properties:
+//   1.Title
+//   2.Description
+//   3.Duration
+//   4.startDate
+//   5.endDate
+//   6. CheckedDays - which has a day, and associated start time and end time eg. Monday, 12:00, 13:00
+//   7.Host - the user who the event belongs too
 
 
   function handleSubmit(event) {
@@ -37,7 +46,7 @@ export default function CreateEventForm() {
     const endDateInput = document.querySelector('input[name="end-date"]');
     const startDateString = startDateInput.value;
     const endDateString = endDateInput.value;
-    //validation 
+    //validation before a form can be submitted
 
     if (!startDateString || !endDateString) {
       alert('Please fill in both start and end dates');
