@@ -5,7 +5,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
-
+//after clicking create event, we are taken to the /create-event page, this is the file responsible for this page
 
 export default function CreateEventForm() {
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
