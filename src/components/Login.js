@@ -5,13 +5,16 @@ import{Link, useNavigate} from 'react-router-dom';
 import Title from './Title';
 export default function Login() {
 
+// create two "refs" using the "useRef" hook
 const emailRef = useRef()
 const passwordRef = useRef()
 const navigate = useNavigate()
 const {login, currentUser} = useAuth()
+
+// create two state variables using the "useState" hook
 const [error,setError] = useState('')
 const [loading, setLoading] = useState(false)
-
+// define an asynchronous function named "handleSubmit" that will handle the form submission event
     async function handleSubmit(e) {
     e.preventDefault()
     try { 
@@ -20,6 +23,7 @@ const [loading, setLoading] = useState(false)
     await login(emailRef.current.value, passwordRef.current.value)
     navigate('/')//on a successful login, move to home page
     } catch (error) {
+      // if there is an error, display an appropriate error message based on the error code returned by Firebase
         console.log(error.code)
         if(error.code === "auth/wrong-password"){
             setError("password is incorrect")
@@ -32,7 +36,7 @@ const [loading, setLoading] = useState(false)
 }
 
 
-
+// return a JS element that will render the login form
   return (
     <>
     <Title/>
