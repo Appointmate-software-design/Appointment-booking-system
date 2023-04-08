@@ -40,7 +40,7 @@ export default function ConfirmBookingView() {
       return timeSlots;
     }
 
-    
+    //check if loading, if it is, then show loading symbol
 
 
   if (loading) {
