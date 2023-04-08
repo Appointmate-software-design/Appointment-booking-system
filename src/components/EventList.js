@@ -1,3 +1,4 @@
+// Importing required libraries and components
 import React, { useContext, useState } from 'react'
 import CreateEventForm from './CreateEventForm'
 import { collection, query, where } from 'firebase/firestore'
@@ -9,23 +10,23 @@ import EventCard from './EventCard'
 import { db } from '../firebase'
 import { ClipLoader } from 'react-spinners'; //for the loading spinner
 
-
+// Defining a function component called EventList
 export default function EventList() {
-  const { currentUser } = useAuth()
-  const eventsCollection = collection(db, 'events')
+  const { currentUser } = useAuth() // Getting current user from AuthContext
+  const eventsCollection = collection(db, 'events')  // Accessing 'events' collection from Firebase Firestore
   const eventsQuery = query(eventsCollection, where("host", '==', currentUser.uid
   ))
-  const [eventsSnapshot, loading, error] = useCollection(eventsQuery)
+  const [eventsSnapshot, loading, error] = useCollection(eventsQuery) // Using Firebase Firestore hook to retrieve events collection
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => {
     setShowModal(false)
   }
   console.log('rendering EventList')
-  const events = eventsSnapshot?.docs
+  const events = eventsSnapshot?.docs // Getting the documents from eventsSnapshot
   console.log(loading)
 
-
+// Rendering the component
   return <div>
     {showModal && <div className='create-new-event'>
       <CreateEventForm handleClose={handleClose} />
@@ -53,7 +54,7 @@ export default function EventList() {
       <ul>{events?.map((event) => {
         const eventData = event.data()
         console.log({event})
-        return <EventCard eventData={{...eventData, id:event.id}} 
+        return <EventCard eventData={{...eventData, id:event.id}}  // Rendering EventCard component with the event data
         />
       })}</ul>
       
