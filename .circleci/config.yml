@@ -6,13 +6,10 @@ version: 2.1
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   say-hello:
-  build:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
-      - image: circleci/python:3.8
-            coverage run -m pytest
-            coverage xml
+      - image: cimg/base:stable
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
@@ -20,14 +17,10 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-          
-          name: Upload coverage report to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  build:
   say-hello-workflow:
     jobs:
       - say-hello
