@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import ConfirmBookingView from './components/ConfirmBookingView'
 import PrivateRoute from "./components/PrivateRoute"; //this is so we can't access certain pages when we are logged out.
+//In this component, we define all the routes of our application
 function App() {
   return (
     <div className="App">
