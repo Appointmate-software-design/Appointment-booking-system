@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
+//this file deals with the show link button and how it appears on the page, as well as what happens when you click it and gives you the ability to copy that link and hide it
+
 export default function ShowLinkButton({ eventData }) {
   const [showLink, setShowLink] = useState(false);
   const linkRef = useRef(null);
