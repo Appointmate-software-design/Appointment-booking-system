@@ -11,6 +11,7 @@ export default function EventCard({ eventData }) {
     await deleteDoc(doc(collection(db, 'events'), eventData.id));
   };
 
+//css below
 
   return (
     <div className='EventCard' style={{ maxWidth: '400px' }}>
