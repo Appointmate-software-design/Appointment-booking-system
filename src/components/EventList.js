@@ -10,6 +10,8 @@ import EventCard from './EventCard'
 import { db } from '../firebase'
 import { ClipLoader } from 'react-spinners'; //for the loading spinner
 
+//this file lists all the events as event cards on our events page
+
 // Defining a function component called EventList
 export default function EventList() {
   const { currentUser } = useAuth() // Getting current user from AuthContext
