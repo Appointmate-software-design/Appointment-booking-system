@@ -16,7 +16,7 @@ export default function CreateEventForm() {
   // Initialize state for start/end time validation
   const [validStartEndTimes, setValidStartEndTimes] = useState(true);
   
-  // an event creation from has the following properties:
+  // an event created from the creation form, has the following properties:
 //   1.Title
 //   2.Description
 //   3.Duration
