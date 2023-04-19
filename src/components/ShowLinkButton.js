@@ -19,7 +19,7 @@ export default function ShowLinkButton({ eventData }) {
   }, [showLink]);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://appointmate-826f0.web.app/events/${eventData.id}`); //so that we can copy the link with ease
+    navigator.clipboard.writeText(`http://localhost:3000/events/${eventData.id}`); //so that we can copy the link with ease
   };
 
   const handleHideLink = () => {
@@ -50,7 +50,7 @@ export default function ShowLinkButton({ eventData }) {
             backgroundColor: 'white',
           }}
         >
-          <p>{`https://appointmate-826f0.web.app/${eventData.id}`}</p>
+          <p>{`http://localhost:3000/${eventData.id}`}</p>
           <button style={{ backgroundColor: 'steelblue', color: 'white', marginRight: '1em' }} onClick={handleCopyLink}>Copy Link</button>
           <button style={{ backgroundColor: 'steelblue', color: 'white' }} onClick={handleHideLink}>Hide Link</button>
         </div>
