@@ -1,4 +1,4 @@
-\import React from 'react';
+import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import ConfirmBookingView from './ConfirmBookingView';
 import { BrowserRouter as Router } from 'react-router-dom';
