@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import ConfirmBookingView from './ConfirmBookingView';
 import { BrowserRouter as Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 // Mock data for the useParams hook
 jest.mock('react-router-dom', () => ({
