@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { auth } from "../firebase";
 import { doc,addDoc, collection } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
@@ -125,7 +126,8 @@ export default function ConfirmBookingView() {
       name,
       selectedDate : moment(selectedDate).format("YYYY-MM-DD"),
       bookedSlots,
-      eventName: event.title
+      eventName: event.title,
+      host: auth.currentUser.uid
     };
 
     try {
