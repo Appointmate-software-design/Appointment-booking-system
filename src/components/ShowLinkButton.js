@@ -50,7 +50,7 @@ export default function ShowLinkButton({ eventData }) {
             backgroundColor: 'white',
           }}
         >
-          <p>{`http://localhost:3000/${eventData.id}`}</p>
+          <p>{`http://localhost:3000.app/${eventData.id}`}</p>
           <button style={{ backgroundColor: 'steelblue', color: 'white', marginRight: '1em' }} onClick={handleCopyLink}>Copy Link</button>
           <button style={{ backgroundColor: 'steelblue', color: 'white' }} onClick={handleHideLink}>Hide Link</button>
         </div>

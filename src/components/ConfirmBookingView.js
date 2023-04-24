@@ -1,20 +1,31 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { auth } from "../firebase";
-import { doc,addDoc, collection } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
 import EventDaySelection from "./EventDaySelection";
 import { ClipLoader } from 'react-spinners'; //for the loading spinner
 import Title from './Title'; // title should be on every page
 import moment from 'moment';
+import { useAuth } from "../contexts/AuthContext";
+import { addDoc, collection } from "firebase/firestore";
+import ThankYouModal from "./ThankYouModal";
+import AvailableTimeSlots from './AvailableTimeSlots'; // check for booked time slots so that meetings cannot clash
+import emailjs from "emailjs-com";
+
 
 export default function ConfirmBookingView() {
   const { eventId } = useParams();
   const documentRef = doc(db, "events", eventId); // Create a Document Reference object
   const [event, loading, error] = useDocumentData(documentRef);
+  const [selectedSlots, setSelectedSlots] = useState([]); //to store the selected time slots.
   const [selectedDate, setSelectedDay] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState(null);
+  const { currentUser } = useAuth(); //host of the event
+  const [isModalOpen, setIsModalOpen] = useState(false);//ThankYou modal state
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]);
+
+
   const handleSelectDay = (date) => {
     setSelectedDay(date);
   };
@@ -22,7 +33,6 @@ export default function ConfirmBookingView() {
   const availableTimes = selectedDate && event?.checkedDays.find(({day})=>{ // need to see if the day selected is a checked day before we show slots
     return day === daysOfWeek[selectedDate.getDay()]
   })
-  console.log({availableTimes})
 
 
     //Given the start time, end time and duration of the event, calculate the time slots that must appear
@@ -58,95 +68,88 @@ export default function ConfirmBookingView() {
     return <p>there was an error getting event</p>;
   }
 
-  const PopupMessage = ({ message }) => {
-    const [visible, setVisible] = useState(true);
-  
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setVisible(false);
-      }, 3000);
-  
-      return () => {
-        clearTimeout(timer);
-      };
-    }, []);
-  
-    return visible ? (
-      <div
-        style={{
-          position: "fixed",
-          top: "10px",
-          right: "10px",
-          backgroundColor: "teal",
-          color: "white",
-          padding: "10px",
-          borderRadius: "5px",
-          zIndex: "9999"
-        }}
-      >
-        {message}
-      </div>
-    ) : null;
+  //function to handle slot change
+  const handleSlotChange = (e) => {
+    const { name, checked } = e.target;
+    if (checked) {
+      setSelectedSlots((prev) => [...prev, name]);
+    } else {
+      setSelectedSlots((prev) => prev.filter((slot) => slot !== name));
+    }
   };
 
-  const handleConfirmBooking = async () => {
-    // Get user details from input fields
-    const email = document.getElementById("email").value;
-    const name = document.getElementById("name").value;
-
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex pattern for email validation
-    if (!email.match(emailPattern)) {
-      // Check if email is in the correct format
-      alert("Email is not in the correct format");
-      return; // Return early if email is not valid
+  const handleConfirmBooking = () => {
+    const emailInput = document.getElementById("email").value;
+    const nameInput = document.getElementById("name").value;
+  
+    // Check if email or name is empty
+    if (!emailInput) {
+      alert("Please enter your email.");
+      return;
+    }
+    if (!nameInput) {
+      alert("Please enter your name.");
+      return;
     }
   
-    // Name validation
-    if (!name || typeof name !== "string") {
-      // Check if name is empty or not a string
-      alert("Name is required and should be a string");
-      return; // Return early if name is not valid
-    }else if (!/^[a-zA-Z]+$/.test(name)) {
-        // Check if name contains only alphabets
-        alert("Name should contain only alphabets");
-        return; // Return early if name is not valid
-    }
-  
-
-    
-    // Get selected time slots
-    const selectedSlots = document.querySelectorAll('input[type="checkbox"]:checked');
-    const bookedSlots = [];
-    selectedSlots.forEach(slot => {
-      bookedSlots.push(slot.value);
-    });
-
-    const booking = {
-      email,
-      name,
-      selectedDate : moment(selectedDate).format("YYYY-MM-DD"),
-      bookedSlots,
-      eventName: event.title,
-      host: auth.currentUser.uid
-    };
-
-    try {
-      // Add booking information to Firebase collection
-      const bookingRef = await addDoc(collection(db, "bookings"), booking);
-      console.log("Booking added with ID: ", bookingRef.id);
-      // Do something after successful booking confirmation
-      document.getElementById("email").value = ""; //clears the email field after successful booking
-      document.getElementById("name").value = ""; //clears the name field after successful booking
-      //setSelectedDay(null);                     // clears the selectedDay field after successful booking
-      setBookingStatus("success");
+    if (selectedSlots.length === 0) {
+      alert("Please select at least one slot.");
+    } else {
+      // Get available slots from the AvailableTimeSlots component
+      const availableSlots = availableTimes && calculateTimeSlots(availableTimes.startTime, availableTimes.endTime, event.duration)
+        .filter((slot) => !bookedSlots.includes(`${slot.start}-${slot.end}`));
       
-      selectedSlots.forEach(slot => {
-        slot.checked = false;                    // unchecks the selected time slot after successful booking
+      // Save only available slots
+      const slotsToSave = selectedSlots.filter((slot) => availableSlots.some((availableSlot) => `${availableSlot.start}-${availableSlot.end}` === slot));
+      
+      slotsToSave.forEach((slot) => {
+        saveBooking(slot, selectedDate, nameInput, emailInput, currentUser.uid);
       });
+      setIsModalOpen(true);
+      setSelectedSlots([]); // Clear the selectedSlots state after the booking process
+    }      
+    
+    
+  };
+  
+  
+  
+  const saveBooking = async (timeSlot, date, name, email, host) => { //function to save booking into the database
+    try {
+      await addDoc(collection(db, "bookedEvents"), {
+        timeSlot,
+        date,
+        name,
+        email,
+        host,
+        title: event.title,
+        description: event.description
+      });
+      
+
+      emailjs.send(
+        "service_kd1nbnm",
+        "template_1e2c8el",
+        {
+          to_email: email,
+          name: name,
+          date: selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+          timeSlot: timeSlot,
+          eventTitle: event.title,
+          eventDescription: event.description,
+          hostName: currentUser.displayName || currentUser.email,
+        },
+        "-U8Z9iJC2NXirC-38"
+        
+      );
+      
     } catch (error) {
       console.error("Error adding booking: ", error);
     }
   };
+  
+  
+
   return (
     <div>
       <Title/>
@@ -173,29 +176,62 @@ export default function ConfirmBookingView() {
         endDate={new Date(event.endDate)}
       />
 {/* if a day is selected, check if it is in the meeting schedule, if it is then show the relevant time slots, otherwise say "The day selected is not in the meeting schedule"  */}
-      {selectedDate && availableTimes && calculateTimeSlots(availableTimes.startTime, availableTimes.endTime, event.duration).length > 0 ? (
-        calculateTimeSlots(availableTimes.startTime, availableTimes.endTime, event.duration).map((slot) => (
-          <div key={`${slot.start}-${slot.end}`} style={{ marginTop: "10px", marginLeft: "10px" }}>
-            <input type="checkbox" id={`${slot.start}-${slot.end}`} name={`${slot.start}-${slot.end}`} value={`${slot.start}-${slot.end}`}  />
-            <label htmlFor={`${slot.start}-${slot.end}`} style={{ marginLeft: "5px" }}>
-              {slot.start}-{slot.end}
-            </label>
-          </div>
-        ))
-      
-      ) : (
-        selectedDate && <p>The day selected is not in the meeting schedule</p>
-      )}
+{/*The AvailableTimeSlots component also checks if the time slot has been booked before displaying it */}
+  {selectedDate && availableTimes ? (
+    <AvailableTimeSlots
+    host={event.host}
+    title={event.title}
+    description={event.description}
+    date={selectedDate}
+    startTime={availableTimes.startTime}
+    endTime={availableTimes.endTime}
+    duration={event.duration}
+    handleSlotChange={handleSlotChange}
+    bookedSlots={bookedSlots}
+    setBookedSlots={setBookedSlots}
+    availableSlots={availableSlots} 
+    setAvailableSlots={setAvailableSlots} 
+  />
+  
+  ) : (
+    selectedDate && <p>The day selected is not in the meeting schedule</p>
+  )}
 
-        {selectedDate && availableTimes && <button style={{backgroundColor: 'teal', color: 'white', borderRadius: '5px', marginTop: '10px', marginLeft: '10px'}}onClick={handleConfirmBooking}>Confirm booking</button>
-}
+
+{selectedDate && availableTimes && (
+  availableSlots.length > 0 ? (
+    <button
+      style={{
+        backgroundColor: 'teal',
+        color: 'white',
+        borderRadius: '5px',
+        marginTop: '10px',
+        marginLeft: '10px',
+      }}
+      onClick={handleConfirmBooking}
+    >
+      Confirm booking
+    </button>
+  ) : (
+    <p>No time slots left for this day.</p>
+  )
+)}
+
+{/* Add the ThankYouModal component */}
+<ThankYouModal
+  isOpen={isModalOpen}
+  onClose={() => {
+    setIsModalOpen(false);
+    setSelectedDay(null);
+  }}
+  email={currentUser.email}
+/>
+
       
 
         {!selectedDate && 
         <p>no date selected</p>}
-     {bookingStatus ==="success" && (
-      <PopupMessage message="Booking successful!" />
-      )}
+
     </div>
   );
 
