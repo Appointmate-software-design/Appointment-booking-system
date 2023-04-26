@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title component Appointmate text has gradient style 1`] = `
+<div
+  style={
+    Object {
+      "padding": "2rem",
+      "position": "relative",
+      "textAlign": "center",
+    }
+  }
+>
+  <h1
+    style={
+      Object {
+        "WebkitBackgroundClip": "text",
+        "WebkitTextFillColor": "transparent",
+        "backgroundImage": "linear-gradient(to bottom, #0077B5, #FFFFFF)",
+        "fontSize": "70px",
+      }
+    }
+  >
+    appointmate
+  </h1>
+  <img
+    alt="Appointmate Logo"
+    src="/logo-appointmate.png"
+    style={
+      Object {
+        "height": "auto",
+        "left": "1rem",
+        "position": "absolute",
+        "top": "1rem",
+        "width": "100px",
+      }
+    }
+  />
+</div>
+`;
