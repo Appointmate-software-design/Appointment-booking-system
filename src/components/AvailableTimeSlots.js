@@ -1,4 +1,4 @@
-// Import necessary libraries and components
+// Import necessary libraries and components.
 import React, { useEffect, useState } from 'react';
 import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
