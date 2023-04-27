@@ -38,3 +38,8 @@ const CancelMeetingModal = ({ isOpen, onClose, name }) => {
   };
   
   export default CancelMeetingModal;
+
+  /*
+   The modal displays a message that a meeting has been canceled, along with the name of the person the meeting was with. 
+   The modal has a close button that when clicked closes the modal.
+  */
