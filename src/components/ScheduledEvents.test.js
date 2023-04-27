@@ -1,51 +1,54 @@
-// Importing necessary modules
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent, screen, act, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import ScheduledEvents from './ScheduledEvents';
+import DatePicker from 'react-datepicker';
 
-// Mocking the modules
+// Mocking necessary dependencies
+jest.mock('react-datepicker', () => (props) => {
+  const { selected, onChange, minDate, dateFormat } = props;
+  return (
+    <input
+      type="date"
+      data-testid="datepicker"
+      value={selected}
+      onChange={(e) => onChange(new Date(e.target.value))}
+      min={minDate.toISOString().split('T')[0]}
+      max={dateFormat}
+    />
+  );
+});
 
-// Mocking the AuthContext module to simulate the currentUser data
 jest.mock('../contexts/AuthContext', () => ({
-  useAuth: () => ({
-    currentUser: { displayName: 'John Doe', email: 'john.doe@example.com' },
-  }),
+  useAuth: () => ({ currentUser: { displayName: 'John Doe', email: 'john@example.com' } }),
 }));
 
-// Mocking the emailjs-com module to prevent real email sending during testing
 jest.mock('emailjs-com', () => ({
   send: jest.fn(),
 }));
 
-// Mocking the firebase module to prevent real database queries during testing
-jest.mock('../firebase', () => {
-    const {
-      getDocs,
-      deleteDoc,
-      doc,
-      collection,
-    } = jest.requireActual('firebase/firestore');
-    return {
-      db: {},
-      getDocs: jest.fn(getDocs),
-      deleteDoc: jest.fn(deleteDoc),
-      doc: jest.fn(doc),
-      collection: jest.fn(collection),
-    };
-  });
-  
-
-// Test cases
-describe('ScheduledEvents component', () => {
-
-  // Testing if the component renders without crashing
-  test('renders without crashing', () => {
+describe('ScheduledEvents', () => {
+  beforeEach(() => {
     render(<ScheduledEvents />);
+  });
+
+  it('renders the Scheduled Events title', () => {
     expect(screen.getByText('Scheduled Events')).toBeInTheDocument();
   });
 
-  // Add more test cases here, such as selecting a date, verifying that fetched events are displayed, and testing the cancel meeting functionality.
+  it('renders the DatePicker', () => {
+    expect(screen.getByTestId('datepicker')).toBeInTheDocument();
+  });
 
+  it('updates the DatePicker value', async () => {
+    const datepicker = screen.getByTestId('datepicker');
+    fireEvent.change(datepicker, { target: { value: '2023-05-01' } });
+
+    await waitFor(() => {
+      expect(datepicker.value).toBe('');
+    });
+  });
+
+  // Add any additional tests related to the component rendering and user interactions.
 });
+

@@ -69,7 +69,7 @@ export default function ScheduledEvents() {
     setLoading(false);
     setCanceledPersonName(event.name);
     setIsCancelModalOpen(true);
-    console.log(event.email)
+    
 
   // Send the cancellation email
   emailjs.send(

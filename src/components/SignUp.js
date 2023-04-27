@@ -27,7 +27,6 @@ export default function SignUp() {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate('/'); // Redirects to home page after a successful sign up
     } catch (error) {
-      console.log(error.code);
       if (error.code === 'auth/invalid-email') {
         // Show an error message for invalid email
         setError('Please enter a valid email address');

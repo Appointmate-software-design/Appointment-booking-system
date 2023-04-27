@@ -24,9 +24,9 @@ export default function EventList() {
   const handleClose = () => {
     setShowModal(false)
   }
-  console.log('rendering EventList')
+  
   const events = eventsSnapshot?.docs // Getting the documents from eventsSnapshot
-  console.log(loading)
+ 
 
 // Rendering the component
   return <div>
@@ -55,7 +55,7 @@ export default function EventList() {
           )} {/*if code is loading, show that it is*/}
       <ul>{events?.map((event) => {
         const eventData = event.data()
-        console.log({event})
+        
         return <EventCard eventData={{...eventData, id:event.id}}  // Rendering EventCard component with the event data
         />
       })}</ul>

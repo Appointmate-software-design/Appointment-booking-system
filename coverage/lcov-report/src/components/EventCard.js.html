@@ -97,8 +97,11 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -112,7 +115,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -129,45 +131,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Importing necessary modules and components
+import React from 'react';
 import { deleteDoc, doc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import ShowLinkButton from './ShowLinkButton';
 import './EventCard.css';
-// this file pertains to how 
-// an event will be shown on our events page when it is scheduled
-// the purpose of the below function is to define a function that can be used to delete a specific document from our Firebase database.
+&nbsp;
+// This file defines how an event will be displayed on the events page when it is scheduled
+&nbsp;
+// The EventCard component displays the details of an event and provides a way to delete it
 export default function <span class="fstat-no" title="function not covered" >EventCard(</span>{ eventData }) {
+&nbsp;
+  // This function handles the deletion of an event from the database
   const handleDelete = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    await deleteDoc(doc(collection(db, 'events'), eventData.id));</span>
   };
 &nbsp;
-//css below
-&nbsp;
+  // The return statement defines the layout and style of the event card
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className='EventCard' style={{ maxWidth: '400px' }}&gt;
       &lt;button className='delete-button' onClick={handleDelete}&gt;Delete&lt;/button&gt;
       &lt;div&gt;
-      &lt;div style={{ fontSize: '1.6em' }}&gt;&lt;strong&gt;Title:&lt;/strong&gt; &lt;span style={{ wordWrap: 'break-word' }}&gt;{eventData.title}&lt;/span&gt;&lt;/div&gt;
-      &lt;div&gt;&lt;strong style={{ fontSize: '1.3em' }}&gt;Description:&lt;/strong&gt; &lt;span style={{ wordWrap: 'break-word' }}&gt;{eventData.description}&lt;/span&gt;&lt;/div&gt; {/* Description must be larger but not its contents */}
-&nbsp;
+        &lt;div style={{ fontSize: '1.6em' }}&gt;&lt;strong&gt;Title:&lt;/strong&gt; &lt;span style={{ wordWrap: 'break-word' }}&gt;{eventData.title}&lt;/span&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;strong style={{ fontSize: '1.3em' }}&gt;Description:&lt;/strong&gt; &lt;span style={{ wordWrap: 'break-word' }}&gt;{eventData.description}&lt;/span&gt;&lt;/div&gt; {/* Description must be larger but not its contents */}
         &lt;div&gt;&lt;strong&gt;Duration:&lt;/strong&gt; {eventData.duration}&lt;&gt; minutes&lt;/&gt;&lt;/div&gt;
         &lt;div&gt;&lt;strong&gt;Date Range:&lt;/strong&gt; {new Date(eventData.startDate).toLocaleDateString()} - {new Date(eventData.endDate).toLocaleDateString()}&lt;/div&gt;
-      &lt;/div &gt;
+      &lt;/div&gt;
       &lt;div style={{ marginTop: '2.5em' }}&gt;&lt;/div&gt; {/* empty lines for spacing css correctly */}
       &lt;div style={{ position: 'absolute', bottom: '0.3em'}}&gt;
-      &lt;ShowLinkButton eventData={eventData} /&gt;
+        &lt;ShowLinkButton eventData={eventData} /&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   )
-  
 }
-&nbsp;
-&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -175,7 +172,7 @@ export default function <span class="fstat-no" title="function not covered" >Eve
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-25T11:25:50.344Z
+                at 2023-04-27T19:52:59.793Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

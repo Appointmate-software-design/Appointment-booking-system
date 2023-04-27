@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuth } from '../contexts/AuthContext';
 
+
 // Mock necessary hooks and modules
 // Mocks the 'useParams' hook from 'react-router-dom'
 jest.mock('react-router-dom', () => ({
@@ -20,6 +21,19 @@ jest.mock('react-firebase-hooks/firestore', () => ({
 jest.mock('../contexts/AuthContext', () => ({
   useAuth: jest.fn(),
 }));
+jest.mock('react-datepicker', () => {
+  return function MockDatePicker(props) {
+    return (
+      <input
+        type="text"
+        value={props.selected?.toISOString().substring(0, 10)}
+        onClick={() => props.onChange(new Date('2023-01-01'))}
+        aria-label="date-picker"
+      />
+    );
+  };
+});
+
 
 // Mock data for the event and current user
 const mockEvent = {
@@ -78,4 +92,24 @@ describe('ConfirmBookingView', () => {
   });
 
   // Add more tests as needed
+    // Test to check if the component renders the "No date selected" message
+    it('renders "No date selected" message', () => {
+      render(<ConfirmBookingView />);
+      expect(screen.getByText(/no date selected/i)).toBeInTheDocument();
+    });
+  
+  // Test to check if the component updates the selected date
+  it('updates selected date', async () => {
+    render(<ConfirmBookingView />);
+    const datePicker = screen.getByRole('textbox', { name: /date-picker/i });
+    fireEvent.click(datePicker); // Click the mocked date picker input
+
+    await waitFor(() => {
+      expect(screen.getByText(/The day selected is not in the meeting schedule/i)).toBeInTheDocument();
+    });
+  });
+
+  
 });
+
+

@@ -61,14 +61,15 @@ export default function Login() {
               {error && <Alert variant='danger'>{error}</Alert>}
               {/* Define the login form with email and password input fields */}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef}></Form.Control>
-                </Form.Group>
-                <Form.Group id="password">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" ref={passwordRef}></Form.Control>
-                </Form.Group>
+              <Form.Group controlId="emailFormGroup">
+                <Form.Label htmlFor="email">Email</Form.Label>
+                <Form.Control type="email" ref={emailRef} id="email" required />
+              </Form.Group>
+              <Form.Group controlId="passwordFormGroup">
+                <Form.Label htmlFor="password">Password</Form.Label>
+                <Form.Control type="password" ref={passwordRef} id="password" required />
+              </Form.Group>
+
                 {/* Disable the login button while the login attempt is in progress */}
                 <Button disabled={loading} className="w-100 mt-3" type="submit">Log In</Button>
               </Form>

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -115,16 +115,14 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,66 +165,71 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Component to display a modal with a confirmation message after a booking has been made
 export default function ThankYouModal({ isOpen, onClose, email }) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (!isOpen) return null;
-  
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  // If the modal is closed, do not render anything
+  if (!isOpen) return null;
+&nbsp;
+  // Render the modal if it is open
+  return (
+    &lt;div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0.7)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000,
+      }}
+    &gt;
       &lt;div
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0,0,0,0.7)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1000,
+          backgroundColor: "#fff",
+          padding: "40px",
+          borderRadius: "8px",
+          width: "80%",
+          maxWidth: "400px",
         }}
       &gt;
-        &lt;div
+        &lt;h2&gt;Booking Confirmed&lt;/h2&gt;
+        &lt;p&gt;
+          Thank you for booking with &lt;strong&gt;{email}&lt;/strong&gt;.
+        &lt;/p&gt;
+        &lt;p&gt;
+          An email will be sent to you with the details of your booking.
+        &lt;/p&gt;
+        &lt;button
+          onClick={onClose}
           style={{
-            backgroundColor: "#fff",
-            padding: "40px",
-            borderRadius: "8px",
-            width: "80%",
-            maxWidth: "400px",
+            backgroundColor: "teal",
+            color: "white",
+            borderRadius: "5px",
+            marginTop: "20px",
+            padding: "8px 16px",
           }}
         &gt;
-          &lt;h2&gt;Booking Confirmed&lt;/h2&gt;
-          &lt;p&gt;
-            Thank you for booking with &lt;strong&gt;{email}&lt;/strong&gt;.
-          &lt;/p&gt;
-          An email will be sent to you with the details of your booking.
-          &lt;p&gt;
-&nbsp;
-          &lt;/p&gt;
-          &lt;button
-            onClick={onClose}
-            style={{
-              backgroundColor: "teal",
-              color: "white",
-              borderRadius: "5px",
-              marginTop: "20px",
-              padding: "8px 16px",
-            }}
-          &gt;
-            Close
-          &lt;/button&gt;
-        &lt;/div&gt;
+          Close
+        &lt;/button&gt;
       &lt;/div&gt;
-    );
-  }
-  </pre></td></tr></table></pre>
+    &lt;/div&gt;
+  );
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-25T11:25:50.344Z
+                at 2023-04-27T19:52:59.793Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

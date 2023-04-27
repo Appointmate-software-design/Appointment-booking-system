@@ -11,6 +11,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import ThankYouModal from "./ThankYouModal";
 import AvailableTimeSlots from './AvailableTimeSlots'; // check for booked time slots so that meetings cannot clash
+const { calculateTimeSlots } = AvailableTimeSlots;
 import emailjs from "emailjs-com";
 
 
@@ -35,23 +36,6 @@ export default function ConfirmBookingView() {
   })
 
 
-    //Given the start time, end time and duration of the event, calculate the time slots that must appear
-    const calculateTimeSlots = (startTime, endTime, duration) => {
-      const timeSlots = [];
-      const start = moment(startTime, "H:mm");
-      const end = moment(endTime, "H:mm");
-      
-      while (start < end) {
-        const slotEnd = moment.min(moment(start).add(duration, "minutes"), end);
-        timeSlots.push({
-          start: start.format("H:mm"),
-          end: slotEnd.format("H:mm")
-        });
-        start.add(duration, "minutes");
-      }
-      
-      return timeSlots;
-    }
 
     //check if loading, if it is, then show loading symbol
 

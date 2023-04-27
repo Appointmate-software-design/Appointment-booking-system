@@ -13,6 +13,7 @@ export default function EventDaySelection({ handleSelectDay, selectedDate, start
                 onChange={handleSelectDay}
                 minDate={startDate}
                 maxDate={endDate}
+                aria-label="date-picker" // Add this line
             // excludeDates={excludedDates}
             />
         </div>
