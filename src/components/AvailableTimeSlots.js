@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import moment from 'moment';
-import { ClipLoader } from 'react-spinners'; //for the loading spinner
+import { ClipLoader } from 'react-spinners'; 
+/*for the loading spinner
+ClipLoader is a React component that displays a loading animation using a rotating clip. 
+It can be used to provide visual feedback to users while content is being loaded or processed.
+*/
 
 // this file checks the database to ensure that booked slots do not appear, i.e meetings cannot clash
 
