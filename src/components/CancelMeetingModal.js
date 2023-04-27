@@ -2,6 +2,9 @@ import React from 'react';
 import Modal from 'react-modal';
 import './CancelMeetingModal.css';
 
+
+//this component displays a modal that informs the user that a meeting has been canceled, and allows them to close the modal when they are done.
+
 const CancelMeetingModal = ({ isOpen, onClose, name }) => {
     return (
       <Modal
