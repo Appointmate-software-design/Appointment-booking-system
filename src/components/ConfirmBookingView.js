@@ -228,6 +228,7 @@ export default function ConfirmBookingView() {
 />
 
       
+//In addition to rendering the ThankYouModal component, the code also conditionally renders a message if no date has been selected.
 
         {!selectedDate && 
         <p>no date selected</p>}
