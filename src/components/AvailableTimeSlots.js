@@ -83,6 +83,8 @@ const AvailableTimeSlots = ({
     </>
   }
 
+
+//This code returns a list of time slots as checkboxes.
   return (
     <>
       {availableSlots.map((slot) => (
