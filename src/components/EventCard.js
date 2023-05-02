@@ -1,14 +1,35 @@
+/**import React from 'react';
+import { deleteDoc, doc, collection } from 'firebase/firestore';
+import { db } from '../firebase';
+import ShowLinkButton from './ShowLinkButton';
+import './EventCard.css';
+this file pertains to how 
+ an event will be shown on our events page when it is scheduled
+the purpose of the below function is to define a function that can be used to delete a specific document from our Firebase database./export default function EventCard({ eventData }) {
+ const handleDelete = async () => {
+   await deleteDoc(doc(collection(db, 'events'), eventData.id));
+  };**/
 import React from 'react';
 import { deleteDoc, doc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import ShowLinkButton from './ShowLinkButton';
 import './EventCard.css';
-// this file pertains to how 
-// an event will be shown on our events page when it is scheduled
-// the purpose of the below function is to define a function that can be used to delete a specific document from our Firebase database.
+
+/**
+ * The EventCard component defines how an event is displayed on the events page
+ * and provides a function to delete a specific event document from Firebase.
+ */
 export default function EventCard({ eventData }) {
+
+  /**
+   * Handles the deletion of an event document from Firebase.
+   */
   const handleDelete = async () => {
-    await deleteDoc(doc(collection(db, 'events'), eventData.id));
+    try {
+      await deleteDoc(doc(collection(db, 'events'), eventData.id));
+    } catch (error) {
+      console.error('Error deleting event document:', error);
+    }
   };
 
 //css below
