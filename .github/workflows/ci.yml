@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - origin
+      - sprint3
   pull_request:
     branches:
-      - origin
+      - sprint3
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]  # Here, replace 14.x with 18.x
 
     steps:
     - name: Check out repository
@@ -39,3 +39,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: ./coverage/lcov.info
+
