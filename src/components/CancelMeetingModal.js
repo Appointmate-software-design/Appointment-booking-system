@@ -5,8 +5,9 @@ import './CancelMeetingModal.css';
 // A React functional component that represents a modal dialog for canceling a meeting
 // The component takes three props as input: isOpen, onClose, and name
 // isOpen: a boolean that indicates whether the modal is currently open or closed
-// onClose: a function that will be called when the user closes the modal
 // name: a string that contains the name of the person with whom the meeting was scheduled
+// onClose: a function that will be called when the user closes the modal
+
 const CancelMeetingModal = ({ isOpen, onClose, name }) => {
 
     // Render the modal using the react-modal package
