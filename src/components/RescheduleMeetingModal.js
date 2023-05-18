@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import './CancelMeetingModal.css';
 
-//component for modal to show whether the rescheduling was succesful
+//component for modal to show that the rescheduling was succesful.
 
 const RescheduleMeetingModal = ({ isOpen, onClose, name }) => {
     //renders the component below
