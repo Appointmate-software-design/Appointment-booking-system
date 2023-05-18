@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import AvailableTimeSlots from './AvailableTimeSlots';
 const { calculateTimeSlots } = AvailableTimeSlots;
 
+// Mock React's useEffect to control side effects in testing
 jest.mock('react', () => {
   const originalReact = jest.requireActual('react');
   return {
@@ -12,6 +13,7 @@ jest.mock('react', () => {
   };
 });
 
+// Setup function to render the AvailableTimeSlots component with default and override props
 const setup = (overrides) => {
   const defaultProps = {
     host: 'John Doe',
@@ -33,6 +35,7 @@ const setup = (overrides) => {
   return render(<AvailableTimeSlots {...props} />);
 };
 
+// Main test suite for AvailableTimeSlots component
 describe('AvailableTimeSlots', () => {
   test('renders available time slots', () => {
     const handleSlotChange = jest.fn();
@@ -52,7 +55,7 @@ describe('AvailableTimeSlots', () => {
     fireEvent.click(checkbox);
     expect(handleSlotChange).toHaveBeenCalled();
   });
-
+  // Test for rendering when no available slots are present
   test('renders no available slots', () => {
     setup({
       availableSlots: [],
@@ -62,6 +65,7 @@ describe('AvailableTimeSlots', () => {
     expect(screen.queryByText('10:00-11:00')).not.toBeInTheDocument();
   });
 
+  // Test for rendering the loading state
   test('renders loading state', () => {
     setup({
       testLoading: true,
@@ -69,11 +73,12 @@ describe('AvailableTimeSlots', () => {
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
-
+  // Test for ensuring useEffect is properly mocked
   test('useEffect is mocked', () => {
     expect(jest.isMockFunction(useEffect)).toBe(true);
   });
 
+    // Test suite for the calculateTimeSlots utility function
   describe('calculateTimeSlots', () => {
     test('returns correct time slots', () => {
       const startTime = '9:00';
@@ -91,6 +96,7 @@ describe('AvailableTimeSlots', () => {
       expect(timeSlots).toEqual(expectedTimeSlots);
     });
   
+        // Test for returning empty array when start time is equal to end time
     test('returns empty array when start time is equal to end time', () => {
       const startTime = '9:00';
       const endTime = '9:00';
@@ -100,7 +106,8 @@ describe('AvailableTimeSlots', () => {
   
       expect(timeSlots).toEqual([]);
     });
-  
+      // Test for returning empty array when start time is greater than end time
+
     test('returns empty array when start time is greater than end time', () => {
       const startTime = '12:00';
       const endTime = '9:00';
@@ -110,7 +117,8 @@ describe('AvailableTimeSlots', () => {
   
       expect(timeSlots).toEqual([]);
     });
-  
+      // Test for calculating correct time slots with different duration
+
     test('returns correct time slots with different duration', () => {
       const startTime = '9:00';
       const endTime = '12:00';

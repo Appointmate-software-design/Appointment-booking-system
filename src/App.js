@@ -1,6 +1,8 @@
 import { Container } from "react-bootstrap";
 import SignUp from "./components/SignUp";
 import Title from "./components/Title";
+import RescheduleBooking from "./components/RescheduleBooking";
+import CancelBooking from "./components/CancelBooking";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import CreateEventForm from './components/CreateEventForm'
@@ -23,6 +25,8 @@ function App() {
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/events/:eventId" element={<ConfirmBookingView/>}/>
+            <Route path="/cancel/:cancelId" element={<CancelBooking/>} />
+            <Route path="/reschedule/:cancelId/:eventId" element={<RescheduleBooking />} />
           </Routes>
         </AuthProvider>
       </Router>

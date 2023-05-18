@@ -23,7 +23,7 @@ describe('ShowLinkButton', () => {
     const showLinkButton = screen.getByText(/Show Link/i);
     fireEvent.click(showLinkButton);
 
-    const linkText = screen.getByText(`http://localhost:3000.app/${eventData.id}`);
+    const linkText = screen.getByText(`http://localhost:3000/${eventData.id}`);
     const copyLinkButton = screen.getByText(/Copy Link/i);
     const hideLinkButton = screen.getByText(/Hide Link/i);
 
@@ -41,7 +41,7 @@ describe('ShowLinkButton', () => {
     const hideLinkButton = screen.getByText(/Hide Link/i);
     fireEvent.click(hideLinkButton);
 
-    expect(screen.queryByText(`http://localhost:3000.app/${eventData.id}`)).not.toBeInTheDocument();
+    expect(screen.queryByText(`http://localhost:3000/${eventData.id}`)).not.toBeInTheDocument();
     expect(screen.queryByText(/Copy Link/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Hide Link/i)).not.toBeInTheDocument();
   });

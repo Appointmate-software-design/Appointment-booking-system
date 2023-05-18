@@ -46,7 +46,7 @@ export default function EventList() {
           marginLeft: '20px',
           marginBottom: '20px',
           border: '2px solid cyan',
-          borderRadius: '10px'}} onClick={() => { navigate('create-event') }}>Create New Event</button> {/* this button navigates to the /create-event route, where we are shown a form and can create an event */}
+          borderRadius: '10px'}} aria-label="Create New Event" onClick={() => { navigate('create-event') }}>Create New Event</button> {/* this button navigates to the /create-event route, where we are shown a form and can create an event */}
           {loading && (
             <div className="loading">
               <ClipLoader size={60} color="#123abc" loading={loading} />

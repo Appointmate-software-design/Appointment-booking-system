@@ -91,7 +91,6 @@ describe('ConfirmBookingView', () => {
     expect(screen.getByText(/Please select a day from the box below:/i)).toBeInTheDocument();
   });
 
-  // Add more tests as needed
     // Test to check if the component renders the "No date selected" message
     it('renders "No date selected" message', () => {
       render(<ConfirmBookingView />);

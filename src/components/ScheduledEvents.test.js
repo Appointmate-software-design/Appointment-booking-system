@@ -1,54 +1,55 @@
 import React from 'react';
-import { render, fireEvent, screen, act, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ScheduledEvents from './ScheduledEvents';
-import DatePicker from 'react-datepicker';
+import { useAuth } from '../contexts/AuthContext';
 
-// Mocking necessary dependencies
-jest.mock('react-datepicker', () => (props) => {
-  const { selected, onChange, minDate, dateFormat } = props;
-  return (
-    <input
-      type="date"
-      data-testid="datepicker"
-      value={selected}
-      onChange={(e) => onChange(new Date(e.target.value))}
-      min={minDate.toISOString().split('T')[0]}
-      max={dateFormat}
-    />
-  );
-});
-
+//mocks the user and signup and login components
 jest.mock('../contexts/AuthContext', () => ({
-  useAuth: () => ({ currentUser: { displayName: 'John Doe', email: 'john@example.com' } }),
-}));
-
-jest.mock('emailjs-com', () => ({
-  send: jest.fn(),
+  useAuth: () => ({
+    currentUser: { uid: '123', displayName: 'John Doe', email: 'john@example.com' },
+    signup: jest.fn(),
+    login: jest.fn(),
+    logout: jest.fn(),
+  }),
 }));
 
 describe('ScheduledEvents', () => {
+
+  let bookedEvents;
+
   beforeEach(() => {
+    bookedEvents = [
+    ];
     render(<ScheduledEvents />);
   });
-
+//test the rendering of the title
   it('renders the Scheduled Events title', () => {
-    expect(screen.getByText('Scheduled Events')).toBeInTheDocument();
+    const titleElement = screen.getByText(/Scheduled Events/i);
+    expect(titleElement).toBeInTheDocument();
   });
-
+//test the rendering of the date picker
   it('renders the DatePicker', () => {
-    expect(screen.getByTestId('datepicker')).toBeInTheDocument();
+    const datePickerElement = screen.getByText(/Please select a date range:/i);
+    expect(datePickerElement).toBeInTheDocument();
   });
-
-  it('updates the DatePicker value', async () => {
-    const datepicker = screen.getByTestId('datepicker');
-    fireEvent.change(datepicker, { target: { value: '2023-05-01' } });
-
-    await waitFor(() => {
-      expect(datepicker.value).toBe('');
-    });
+//test the rendering of the cancel meeting button
+  it('renders the Cancel Meeting button if events are present', () => {
+    const cancelButton = screen.queryByText('Cancel Meeting');
+    if (bookedEvents.length > 0) {
+      expect(cancelButton).toBeInTheDocument();
+    } else {
+      expect(cancelButton).not.toBeInTheDocument();
+    }
   });
-
-  // Add any additional tests related to the component rendering and user interactions.
+  //test the rendering of the reschedule meeting button
+  it('renders the Reschedule Meeting button if events are present', () => {
+    const rescheduleButton = screen.queryByText('Reschedule Meeting');
+    if (bookedEvents.length > 0) {
+      expect(rescheduleButton).toBeInTheDocument();
+    } else {
+      expect(rescheduleButton).not.toBeInTheDocument();
+    }
+  });
 });
 

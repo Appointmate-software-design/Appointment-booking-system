@@ -1,4 +1,4 @@
-// Import necessary libraries and components.
+// Import necessary libraries and components
 import React, { useEffect, useState } from 'react';
 import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -53,7 +53,9 @@ const AvailableTimeSlots = ({
         collection(db, 'bookedEvents'),
         where('host', '==', host),
         where('date', '==', date)
+        
       );
+      console.log(date)
       const querySnapshot = await getDocs(q); // Execute the query and store the result
   
       const bookedSlotsArray = []; // Initialize an array to store booked slots

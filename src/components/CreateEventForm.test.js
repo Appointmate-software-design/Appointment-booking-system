@@ -5,6 +5,7 @@ import CreateEventForm from './CreateEventForm';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+//mock the auth context, user
 jest.mock('../contexts/AuthContext');
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
@@ -13,7 +14,7 @@ jest.mock('react-router-dom', () => ({
 describe('CreateEventForm', () => {
   let alertSpy;
 
-  beforeEach(() => {
+  beforeEach(() => { //create mock user
     useAuth.mockReturnValue({
       currentUser: {
         uid: '12345',
@@ -28,6 +29,8 @@ describe('CreateEventForm', () => {
   afterEach(() => {
     alertSpy.mockRestore();
   });
+
+  //test to see the rendering of the form with all inputs
 
   test('renders the form with all inputs', () => {
     render(<CreateEventForm />);
@@ -88,7 +91,7 @@ describe('CreateEventForm', () => {
       expect(alertSpy).toHaveBeenCalledWith('Please fill in both start and end dates');
     });
   });
-
+//test navigation of close button 
   test('navigate on close button click', () => {
     const navigate = useNavigate();
     render(<CreateEventForm />);

@@ -28,6 +28,18 @@
     color: white;
   }
   
+  .reschedule-meeting-button {
+    border: 1px solid teal;
+    background-color: transparent;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .reschedule-meeting-button:hover {
+    background-color: teal;
+    color: white;
+  }
+  
   .scheduled-events-container {
     display: flex;
     flex-direction: column;
