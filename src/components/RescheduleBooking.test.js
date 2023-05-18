@@ -41,6 +41,8 @@ describe('RescheduleBooking', () => {
       docs: [{ ref: 'mockRef1' }, { ref: 'mockRef2' }],
     });
 
+//This helps synchronize the component's behavior with the testing environment for accurate and reliable test results.
+
     await act(async () => {
       render(<RescheduleBooking />);
     });
