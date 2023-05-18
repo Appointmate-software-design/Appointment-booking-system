@@ -4,6 +4,7 @@ import { collection, getDocs, query, where, deleteDoc } from "firebase/firestore
 import RescheduleBooking from './RescheduleBooking';
 
 //mock the router
+//so as to allows developers to control the behavior of these hooks during testing and verify how their code interacts with them.
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -12,6 +13,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 //mock firestore database
+//allowing you to test how your code interacts with the Firestore functionality.
 
 jest.mock('firebase/firestore', () => ({
   collection: jest.fn(),
