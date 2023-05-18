@@ -8,9 +8,9 @@ import './CancelMeetingModal.css';
 // onClose: a function that will be called when the user closes the modal
 // name: a string that contains the name of the person with whom the meeting was scheduled
 const CancelMeetingModal = ({ isOpen, onClose, name }) => {
-
-    // Render the modal using the react-modal package
     // The modal is displayed only when the isOpen prop is true
+    // Render the modal using the react-modal package
+    
     return (
         <Modal
             isOpen={isOpen}
