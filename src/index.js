@@ -1,3 +1,4 @@
+//ensuring neccessary imports are present for index.js to function
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
