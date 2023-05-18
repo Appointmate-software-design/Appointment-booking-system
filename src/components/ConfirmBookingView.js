@@ -55,6 +55,8 @@ export default function ConfirmBookingView() {
       </div>
     </>
   }
+
+  //if the "event" variable is false then the error message is rendered.
   if (!event) {
     return <p>there was an error getting event</p>;
   }
