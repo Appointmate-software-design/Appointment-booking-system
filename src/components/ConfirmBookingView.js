@@ -69,7 +69,6 @@ export default function ConfirmBookingView() {
     }
   };
 
-  //function that handles the booking for process for reccuring meetings
 
   const handleRecurringConfirm = () => {
     let currentDate = new Date(selectedDate); // Get the current date from the selectedDate
@@ -84,7 +83,7 @@ export default function ConfirmBookingView() {
         currentDate.setDate(currentDate.getDate() + 1);
       }
     }
-  
+  //functionwill e called to check the date
     setRecurringModal(false);
   };
   
