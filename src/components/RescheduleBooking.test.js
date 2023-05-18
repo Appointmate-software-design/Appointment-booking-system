@@ -47,6 +47,9 @@ describe('RescheduleBooking', () => {
       render(<RescheduleBooking />);
     });
 
+
+//These assertions help ensure that the code being tested correctly interacts with the mock functions and variables, providing confidence that the tested functionality behaves as intended.    
+
     expect(collection).toHaveBeenCalledWith(expect.anything(), 'bookedEvents');
     expect(where).toHaveBeenCalledWith('cancelId', '==', mockCancelId);
     expect(query).toHaveBeenCalled();
