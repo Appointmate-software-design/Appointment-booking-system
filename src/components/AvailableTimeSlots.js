@@ -23,8 +23,9 @@ const calculateTimeSlots = (startTime, endTime, duration) => {
   return timeSlots; // Return the time slots array
 };
 
-// AvailableTimeSlots component checks the database to ensure that booked slots do not appear,
+
 // i.e meetings cannot clash
+// AvailableTimeSlots component checks the database to ensure that booked slots do not appear,
 const AvailableTimeSlots = ({
   host,
   title,
