@@ -55,14 +55,13 @@ const AvailableTimeSlots = ({
     fetchBookedSlots();
   }, [host, title, description, date, startTime, endTime, duration, setAvailableSlots]);
   
-  const calculateTimeSlots = (startTime, endTime, duration) => {
-    const timeSlots = [];
-    const start = moment(startTime, 'H:mm');
-    const end = moment(endTime, 'H:mm');
+ /* const calculateTimeSlots = (startTime, endTime, duration) => {
+  const timeSlots = [];
+  const start = moment(startTime, 'H:mm');
+  const end = moment(endTime, 'H:mm');
 
-    while (start < end) {
-      const slotEnd = moment.min(moment(start).add(duration, 'minutes'), end);
-      timeSlots.push({
+  while (start < end) {
+   timeSlots.push({
         start: start.format('H:mm'),
         end: slotEnd.format('H:mm'),
       });
@@ -71,6 +70,24 @@ const AvailableTimeSlots = ({
 
     return timeSlots;
   };
+  */
+  const calculateTimeSlots = (startTime, endTime, duration) => {
+    const timeSlots = [];
+    const start = moment(startTime, 'H:mm');
+    const end = moment(endTime, 'H:mm');
+  
+    while (start.isBefore(end)) {
+      const slotEnd = moment.min(moment(start).add(duration, 'minutes'), end);
+      timeSlots.push({
+        start: start.format('H:mm'),
+        end: slotEnd.format('H:mm'),
+      });
+      start.add(duration, 'minutes');
+    }
+  
+    return timeSlots;
+  };
+  
 
  
 
