@@ -60,8 +60,10 @@ export default function CreateEventForm() {
       alert('Please enter valid date strings in the format YYYY-MM-DD');
       return;
     }
-
-  
+    
+    {/* this code is creating an object named formData that gathers various form data, including values from input fields
+    , the current user's ID, dates, and an array of selected days.
+    The specific values assigned to each property depend on the corresponding HTML elements and variables used in the code.*/}
     const formData = {
       title: document.querySelector('#title').value,
       description: document.querySelector('#description').value,
