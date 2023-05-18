@@ -72,10 +72,10 @@ export default function ConfirmBookingView() {
   //function that handles the booking for process for reccuring meetings
 
   const handleRecurringConfirm = () => {
-    let currentDate = new Date(selectedDate);
-    const endDate = new Date(event.endDate);
-    const selectedDay = selectedDate.getDay();
-  
+    let currentDate = new Date(selectedDate); // Get the current date from the selectedDate
+    const endDate = new Date(event.endDate);// Get the end date of the recurring period
+    const selectedDay = selectedDate.getDay();// Get the day of the week for the selectedDate
+  // If the current day matches the selected day of the week
     while (currentDate <= endDate) {
       if (currentDate.getDay() === selectedDay) {
         handleConfirmBooking(new Date(currentDate), true);
