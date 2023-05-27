@@ -114,32 +114,32 @@ export default function CreateEventForm() {
     <form className="create-event-form">
       <label>
         <span>Title:</span>
-        <input type="text" id="title" />
+        <input type="text" id="title" className='name' placeholder='Enter meeting name'/>
       </label>
       <label>
         <span>Description:</span>
-        <textarea id="description" />
+        <textarea id="description" className='desc' placeholder='Type in meeting description'/>
       </label>
       <label>
         <span>Duration:</span>
-        <select id="duration" defaultValue="15">
+        <select id="duration" defaultValue="15" className='duration'>
           <option value="15">15</option>
           <option value="30">30</option>
         </select>
       </label>
 
       <label htmlFor="start-date">Start Date:</label>
-      <input type="date" id="start-date" name="start-date" />
+      <input type="date" id="start-date" name="start-date" className='startDate'/>
 
       <label htmlFor="end-date">End Date:</label>
-      <input type="date" id="end-date" name="end-date" />
+      <input type="date" id="end-date" name="end-date" className='endDate'/>
 
       <div>
         {daysOfWeek.map((day) => ( //for each day, create a check box, a select for start time and a select for end time
           <div key={day.toLowerCase()}>
             <input type="checkbox" id={day.toLowerCase()} name={day.toLowerCase()} />
             <label htmlFor={day.toLowerCase()}>{day}</label>
-            <select id={`${day.toLowerCase()}-start-time`} name={`${day.toLowerCase()}-start-time`}>
+            <select id={`${day.toLowerCase()}-start-time`} name={`${day.toLowerCase()}-start-time`} className='weekdays'>
               {hours.map((hour) => (
                 <option key={`${day.toLowerCase()}-start-${hour}`} value={hour}>
                   {hour}
@@ -147,7 +147,7 @@ export default function CreateEventForm() {
               ))}
             </select>
             -
-            <select id={`${day.toLowerCase()}-end-time`} name={`${day.toLowerCase()}-end-time`}>
+            <select id={`${day.toLowerCase()}-end-time`} name={`${day.toLowerCase()}-end-time`}className='weekdays'>
               {hours.map((hour) => (
                 <option key={`${day.toLowerCase()}-end-${hour}`} value={hour}>
                   {hour}
@@ -157,7 +157,14 @@ export default function CreateEventForm() {
           </div>
         ))}
         <br />
-        <button onClick={handleSubmit}>Submit</button> <button onClick={() => {navigate('/')}}>Close</button> {/*if you click close, you will be navigated back to home*/}
+        <button className='submit-btn' onClick={handleSubmit}
+         onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+         onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
+        >Submit</button>
+        <button onClick={() => {navigate('/')}}
+        onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+        onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
+        >Close</button> {/*if you click close, you will be navigated back to home*/}
 
       </div>
     </form>

@@ -1,0 +1,23 @@
+.header{
+    position: relative;
+    text-align: center;
+    background-color:rgba(82, 82, 213, 1);
+    padding: 2rem;
+    box-shadow:1px 2px 3px 0px rgba(0, 0, 0, 0.5) ;
+}
+
+.title{
+    font-size: 40px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: bolder;
+    text-align: center;
+}
+
+.logo{
+    width: 110px;
+    height: auto;
+    position: absolute;
+    margin-left: 3px;
+    top: 0.5rem;
+    left: 1rem;
+}

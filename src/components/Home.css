@@ -1,0 +1,84 @@
+.events-btn{
+    padding: 0.6rem 1.5rem;
+    font-size: 18px;
+    margin: 0.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    margin-left: 32px;
+    /*box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.5);*/
+}
+
+.events-btn:focus{
+   box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.scheduled-btn{
+    color: rgb(124, 115, 115);
+    padding: 0.6rem 1.5rem;
+    font-size: 18px;
+    margin: 0.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; 
+}
+
+.scheduled-btn:focus{
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.logout-btn{
+    position: fixed;
+    margin-top: 25px;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    background-color: rgba(82, 82, 213, 0.9);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.25);
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.line {
+    /*background-color: rgb(7, 7, 7);*/
+    border-bottom: 1px solid rgb(7, 7, 7);
+    box-shadow: 0px 1px 1.5px 0.2px rgba(0, 0, 0, 0.5);
+    width: auto;
+    margin: auto;
+    
+}
+
+.welcomeText{
+    margin-left: 32px;
+}
+
+.password-btn{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: teal;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px grey;
+    margin-bottom: 20px;
+    margin-right: 20px; 
+}
+
+.modalcpassword, .modalclose{
+    color: white;
+    background-color: rgba(82, 82, 213, 0.9);
+    padding: 10px 20px;
+    margin: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.25);
+
+}

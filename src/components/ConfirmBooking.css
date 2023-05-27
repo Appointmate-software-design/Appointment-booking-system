@@ -1,0 +1,75 @@
+.bookingForm{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(248, 248, 248);
+    border-radius: 5px;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    margin-top: 5px;
+    margin: 15px;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.paragraph, .p2, .p3{
+    margin-left: 32px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.emailBox, .nameBox{
+    margin: 0.3rem;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.datePicker{
+    margin: 0.3rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.confirm-btn{
+    background-color: rgba(82, 82, 213, 0.9);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    margin:0.8rem;
+    padding: 0.5rem;
+}
+
+.slots{
+    margin: 0.3rem;
+    padding: 0.6em;
+    border: solid rgba(82, 82, 213, 0.5);
+    border-radius: 7px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: rgba(82, 82, 213, 0.5);
+    font-size: large;
+    font-weight: bold;
+}
+
+.slotBox{
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(248, 248, 248);
+}
+
+input[type = "checkbox"]{
+    height: 20px;
+    width: 20px;
+    margin-left: 6px;
+    margin-top: 7px;
+}
+
+.blocks{
+    display: inline;
+    background-color: black;
+}

@@ -1,5 +1,6 @@
 // Importing necessary modules
 import { useState, useEffect, useRef } from 'react';
+import './EventCard.css'
 
 // This component deals with the show link button and how it appears on the page, as well as what happens when you click it and gives you the ability to copy that link and hide it.
 export default function ShowLinkButton({ eventData }) {
@@ -33,19 +34,9 @@ export default function ShowLinkButton({ eventData }) {
   return (
     <div style={{ position: 'relative' }}>
       {/* Show link button */}
-      <button 
-        style={{
-          backgroundColor: 'steelblue',
-          borderRadius: '5px',
-          width: '100px',
-          height: '30px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          fontWeight: 'normal'
-        }} 
-        onClick={() => setShowLink(true)}
+      <button className='link-btn' onClick={() => setShowLink(true)}
+      onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+      onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
       >
         Show Link
       </button>
@@ -58,21 +49,22 @@ export default function ShowLinkButton({ eventData }) {
             top: '0',
             left: '0',
             zIndex: '999',
-            border: '2px solid teal',
+            boxShadow: '1px 2px 3px 0px rgba(0, 0, 0, 0.5)',
+            border: 'none',
+            borderRadius: '5px',
             padding: '1em',
             backgroundColor: 'white',
           }}
         >
           <p>{`http://localhost:3000/${eventData.id}`}</p>
-          <button 
-            style={{ backgroundColor: 'steelblue', color: 'white', marginRight: '1em' }} 
-            onClick={handleCopyLink}
+          <button className='copyLink-btn' onClick={handleCopyLink}
+          onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+          onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
           >
-            Copy Link
-          </button>
-          <button 
-            style={{ backgroundColor: 'steelblue', color: 'white' }} 
-            onClick={handleHideLink}
+            Copy Link </button>
+          <button  className='hide-btn' onClick={handleHideLink}
+          onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+          onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
           >
             Hide Link
           </button>

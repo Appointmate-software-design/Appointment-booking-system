@@ -1,7 +1,7 @@
 .scheduled-events-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
   }
   
   .scheduled-events-table th,
@@ -16,10 +16,13 @@
     font-weight: bold;
   }
 
-  .cancel-meeting-button {
-    border: 1px solid red;
-    background-color: transparent;
+  .cancel-meeting-button, .reschedule-meeting-button {
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(240, 240, 240);
     color: black;
+    padding: 3px 6px;
+    margin: 5px;
     cursor: pointer;
   }
   
@@ -28,15 +31,8 @@
     color: white;
   }
   
-  .reschedule-meeting-button {
-    border: 1px solid teal;
-    background-color: transparent;
-    color: black;
-    cursor: pointer;
-  }
-  
   .reschedule-meeting-button:hover {
-    background-color: teal;
+    background-color: rgba(82, 82, 213, 0.9);
     color: white;
   }
   
@@ -45,4 +41,16 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .datePicker{
+    margin-left: 10px;
+  }
   
+  .scheduledDates{
+    margin: 0.3rem;
+    padding: 0.2rem;
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+  }

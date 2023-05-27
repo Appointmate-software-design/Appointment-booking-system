@@ -153,10 +153,11 @@ export default function ScheduledEvents() {
       <div className="scheduled-events-container">
         <h3>Scheduled Events</h3>
       </div>
+      <div className='datePicker'>
       <p>Please select a date range:</p>
       <p>Start date:</p>
       <div>
-        <DatePicker
+        <DatePicker className="scheduledDates"
           selected={startDate}
           onChange={(date) => {
             if (endDate && date > endDate) {
@@ -168,7 +169,7 @@ export default function ScheduledEvents() {
           dateFormat="yyyy-MM-dd"
         />
         <p>End date:</p>
-        <DatePicker
+        <DatePicker className="scheduledDates"
           selected={endDate}
           onChange={(date) => {
             if (date < startDate) {
@@ -180,6 +181,7 @@ export default function ScheduledEvents() {
           minDate={startDate}
           dateFormat="yyyy-MM-dd"
         />
+      </div>
       </div>
 
       <div>

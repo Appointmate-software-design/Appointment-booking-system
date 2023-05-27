@@ -1,9 +1,10 @@
 // Import the necessary React components and hooks for the login form
 import React, {useRef, useState } from 'react'
-import {Card, Form, Button,Alert,Container } from 'react-bootstrap'
+import {Alert} from 'react-bootstrap'
 import{useAuth} from '../contexts/AuthContext'
 import{Link, useNavigate} from 'react-router-dom';
 import Title from './Title';
+import './Login.css';
 
 // Define a functional component for the login form
 export default function Login() {
@@ -52,35 +53,39 @@ export default function Login() {
   return (
     <>
       <Title/> {/* Render a component for the title of the login page */}
-      <Container className="d-flex align-Items-center justify-content-center" style={{ minHeight: "100vh"}}>
-        <div className="w-100 mt-5" style={{ maxWidth: "400px" }}>
-          <Card>
-            <Card.Body>
-              <h2 className="text-center mb-4">Log In</h2>
+        <div className='container'>
+              <h2 className="login-text">Log In</h2>
               {/* Display any error messages that may have occurred during login */}
               {error && <Alert variant='danger'>{error}</Alert>}
               {/* Define the login form with email and password input fields */}
-              <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="emailFormGroup">
-                <Form.Label htmlFor="email">Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} id="email" required />
-              </Form.Group>
-              <Form.Group controlId="passwordFormGroup">
-                <Form.Label htmlFor="password">Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} id="password" required />
-              </Form.Group>
-
+              <div className='form-container'>
+              <form className='login-form' onSubmit={handleSubmit}>
+                <button className='google-login'
+                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
+                >
+                  <span className='gIcon'>
+                    <img className='google' src={process.env.PUBLIC_URL + '/google.svg'}></img>
+                    Continue with Google
+                  </span>
+                </button>
+                  <hr className='hr-text' data-content="OR"></hr>
+                <input type="email" ref={emailRef} id="email" placeholder='Email address' required />
+                <br></br>
+                <input type="password" ref={passwordRef} id="password" placeholder='Password' required />
+                <br></br>
                 {/* Disable the login button while the login attempt is in progress */}
-                <Button disabled={loading} className="w-100 mt-3" type="submit">Log In</Button>
-              </Form>
-            </Card.Body>
-          </Card>
+                <button disabled={loading} className="login-btn" type="submit"
+                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
+                >Log In</button>
+              </form>
           {/* Display a link to the signup page */}
-          <div className='w-100 text-center mt-2' style={{ color: 'blue' }}>
+          <div className='signup-lnk'>
             Need an Account? <Link to="/signup">Sign up</Link>
           </div>
+          </div>
         </div>
-      </Container>
     </>
   )
 }
