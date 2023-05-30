@@ -8,6 +8,7 @@ import EventList from './EventList';
 import Modal from 'react-modal';
 import { reauthenticateWithCredential, EmailAuthProvider, getAuth, updatePassword } from 'firebase/auth';
 import './Home.css'
+import usePasswordToggle from './usePasswordToggle';
 
 
 // This file contains the Home component which has two buttons, "Scheduled Events" and "Events" and keeps track of which one is active
@@ -24,6 +25,7 @@ export default function Home() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   async function handleLogout() {
     setError('')
@@ -170,15 +172,21 @@ export default function Home() {
       <form onSubmit={handleChangePassword}>
         <label>
           Old Password:
-          <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
+          <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className='oldPasword' required />
         </label>
         <label>
           New Password:
-          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+          <div className='password-wrapper'>
+            <input type={PasswordInputType} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+            <span className="passwordIcon">{ToggleIcon}</span>
+          </div>
         </label>
         <label>
           Confirm New Password:
-          <input type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
+          <div className='password-wrapper'>
+            <input type={PasswordInputType} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
+            <span className="passwordIcon">{ToggleIcon}</span>
+          </div>
         </label>
         <button type="submit" className='modalcpassword'
           onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}

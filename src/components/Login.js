@@ -5,6 +5,7 @@ import{useAuth} from '../contexts/AuthContext'
 import{Link, useNavigate} from 'react-router-dom';
 import Title from './Title';
 import './Login.css';
+import usePasswordToggle from './usePasswordToggle';
 
 // Define a functional component for the login form
 export default function Login() {
@@ -22,6 +23,8 @@ export default function Login() {
   // Define two state variables using the "useState" hook
   const [error,setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   // Define an asynchronous function named "handleSubmit" that will handle the form submission event
   async function handleSubmit(e) {
@@ -72,7 +75,11 @@ export default function Login() {
                   <hr className='hr-text' data-content="OR"></hr>
                 <input type="email" ref={emailRef} id="email" placeholder='Email address' required />
                 <br></br>
-                <input type="password" ref={passwordRef} id="password" placeholder='Password' required />
+                <div className='password-wrapper'>
+                  <input type={PasswordInputType} ref={passwordRef} id="password" className='passInput' placeholder='Password' required />
+                  <span className="passwordIcon">{ToggleIcon}</span>
+                </div>
+
                 <br></br>
                 {/* Disable the login button while the login attempt is in progress */}
                 <button disabled={loading} className="login-btn" type="submit"

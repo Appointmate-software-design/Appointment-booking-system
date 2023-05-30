@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Title from './Title';
 import './SignUp.css'
+import usePasswordToggle from './usePasswordToggle';
 
 // Sign up component
 export default function SignUp() {
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   // Handles form submission
   async function handleSubmit(e) {
@@ -67,9 +69,15 @@ export default function SignUp() {
                   <label htmlFor='email'>Email</label>
                   <input type="email" ref={emailRef} id="email" placeholder='Email address'></input>
                   <label htmlFor="password">Password</label>
-                  <input type="password" ref={passwordRef} id="password" placeholder='Password'></input>
+                  <div className='password-wrapper'>
+                    <input type= {PasswordInputType} ref={passwordRef} id="password" placeholder='Password'></input>
+                    <span className="passwordIcon">{ToggleIcon}</span>
+                  </div>
                   <label htmlFor="password-confirm">Cornfirm password</label>
-                  <input type="password" ref={passwordConfirmRef} id="password-confirm" placeholder='Password'></input>
+                  <div className='password-wrapper'>
+                    <input type={PasswordInputType} ref={passwordConfirmRef} id="password-confirm" placeholder='Password'></input>
+                    <span className="passwordIcon">{ToggleIcon}</span>
+                  </div>
                 <button disabled={loading} className="signup-btn" type="submit"
                   onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
                   onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
