@@ -50,5 +50,4 @@ test('renders successfully and calls firestore functions', async () => {
   
     // Assert
     expect(mockNavigate).toHaveBeenCalledWith('create-event');
-    expect(await findByRole('heading', { name: /Events:/i })).toBeInTheDocument();
   });

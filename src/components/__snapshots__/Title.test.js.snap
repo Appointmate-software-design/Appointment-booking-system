@@ -24,6 +24,8 @@ exports[`Title component Appointmate text has gradient style 1`] = `
   </h1>
   <img
     alt="Appointmate Logo"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
     src="/logo-appointmate.png"
     style={
       Object {
@@ -31,6 +33,8 @@ exports[`Title component Appointmate text has gradient style 1`] = `
         "left": "1rem",
         "position": "absolute",
         "top": "1rem",
+        "transform": "none",
+        "transition": "transform 0.3s",
         "width": "100px",
       }
     }

@@ -54,12 +54,11 @@ describe('SignUp component', () => {
       target: { value: 'password321' },
     });
 
-    fireEvent.click(screen.getByRole('button', { name: /sign up/i }));
+    fireEvent.click(screen.getByRole('button', { name: "Sign Up", type: "submit" }));
 
     await waitFor(() =>
       expect(screen.getByText('Passwords do not match')).toBeInTheDocument()
     );
   });
 
-  // Add more test cases for successful sign up, invalid email, weak password, etc.
 });

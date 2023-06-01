@@ -4,12 +4,16 @@ import userEvent from '@testing-library/user-event';
 import CreateEventForm from './CreateEventForm';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
+import { MemoryRouter } from "react-router-dom";
 //mock the auth context, user
 jest.mock('../contexts/AuthContext');
 jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: jest.fn()
 }));
+
+
+
 
 describe('CreateEventForm', () => {
   let alertSpy;
@@ -33,7 +37,12 @@ describe('CreateEventForm', () => {
   //test to see the rendering of the form with all inputs
 
   test('renders the form with all inputs', () => {
-    render(<CreateEventForm />);
+    render(
+      <MemoryRouter>
+        <CreateEventForm />
+      </MemoryRouter>
+    );
+
 
     expect(screen.getByLabelText('Title:')).toBeInTheDocument();
     expect(screen.getByLabelText('Description:')).toBeInTheDocument();
@@ -45,7 +54,11 @@ describe('CreateEventForm', () => {
   });
 
   test('validates form fields', async () => {
-    const { container } = render(<CreateEventForm />);
+    const { container } =     render(
+      <MemoryRouter>
+        <CreateEventForm />
+      </MemoryRouter>
+    );
     const submitButton = screen.getByRole('button', { name: 'Submit' });
 
     // Click the submit button with empty fields
@@ -94,7 +107,11 @@ describe('CreateEventForm', () => {
 //test navigation of close button 
   test('navigate on close button click', () => {
     const navigate = useNavigate();
-    render(<CreateEventForm />);
+    render(
+      <MemoryRouter>
+        <CreateEventForm />
+      </MemoryRouter>
+    );
     fireEvent.click(screen.getByRole('button', { name: 'Close' }));
     expect(navigate).toHaveBeenCalledWith('/');
   });

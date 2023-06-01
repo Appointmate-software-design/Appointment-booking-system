@@ -78,6 +78,49 @@ export default function ScheduledEvents() {
   
     setBookedEvents(events);
   };
+
+      // Function to fetch past events from Firestore
+      const fetchPastEvents = async () => {
+        const currentTimestamp = Timestamp.fromDate(new Date());
+        
+        const q = query(
+            collection(db, 'bookedEvents'), 
+            where('date', '<', currentTimestamp),
+            where('host', '==', currentUser.uid),
+            orderBy('date', 'desc')
+        );
+        const querySnapshot = await getDocs(q);
+        const events = [];
+        querySnapshot.forEach((doc) => {
+            const eventData = doc.data();
+            eventData.id = doc.id;
+            events.push(eventData);
+        });
+
+             // Helper function to convert time to minutes
+
+    const timeToMinutes = (time) => {
+      const [hour, minute] = time.split(':');
+      return parseInt(hour, 10) * 60 + parseInt(minute, 10);
+    };
+  
+    // Sort first by date, then by time within each date
+    events.sort((a, b) => {
+      const dateA = a.date.toDate();
+      const dateB = b.date.toDate();
+  
+      // If the dates are different, sort by date
+      if (dateA.getDate() !== dateB.getDate() || dateA.getMonth() !== dateB.getMonth() || dateA.getFullYear() !== dateB.getFullYear()) {
+        return dateA - dateB;
+      }
+  
+      // If the dates are the same, sort by time
+      const timeA = timeToMinutes(a.timeSlot.split('-')[0]);
+      const timeB = timeToMinutes(b.timeSlot.split('-')[0]);
+      return timeA - timeB;
+    });
+        setBookedEvents(events);
+    };
   
   // Show loading spinner
 
@@ -153,11 +196,24 @@ export default function ScheduledEvents() {
       <div className="scheduled-events-container">
         <h3>Scheduled Events</h3>
       </div>
-      <div className='datePicker'>
-      <p>Please select a date range:</p>
+      <button 
+          onClick={fetchPastEvents} 
+          style={{
+              backgroundColor: 'teal',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '10px 20px',
+              fontSize: '16px',
+              cursor: 'pointer'
+          }}
+      >
+          View Past Events
+      </button>
+      <p>Or view bookings within a specified date range:</p>
       <p>Start date:</p>
       <div>
-        <DatePicker className="scheduledDates"
+        <DatePicker
           selected={startDate}
           onChange={(date) => {
             if (endDate && date > endDate) {
@@ -169,7 +225,7 @@ export default function ScheduledEvents() {
           dateFormat="yyyy-MM-dd"
         />
         <p>End date:</p>
-        <DatePicker className="scheduledDates"
+        <DatePicker
           selected={endDate}
           onChange={(date) => {
             if (date < startDate) {
@@ -181,7 +237,6 @@ export default function ScheduledEvents() {
           minDate={startDate}
           dateFormat="yyyy-MM-dd"
         />
-      </div>
       </div>
 
       <div>

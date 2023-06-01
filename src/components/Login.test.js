@@ -53,7 +53,8 @@ describe('Login component', () => {
       target: { value: 'wrong-password' },
     });
 
-    fireEvent.click(screen.getByRole('button', { name: /log in/i }));
+    fireEvent.click(screen.getByRole('button', { name: "Log In", type: "submit" }));
+
 
     await waitFor(() =>
       expect(screen.getByText('password is incorrect')).toBeInTheDocument()

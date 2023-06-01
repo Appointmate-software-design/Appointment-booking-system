@@ -4,7 +4,6 @@ import { collection, getDocs, query, where, deleteDoc } from "firebase/firestore
 import RescheduleBooking from './RescheduleBooking';
 
 //mock the router
-//so as to allows developers to control the behavior of these hooks during testing and verify how their code interacts with them.
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -13,7 +12,6 @@ jest.mock('react-router-dom', () => ({
 }));
 
 //mock firestore database
-//allowing you to test how your code interacts with the Firestore functionality.
 
 jest.mock('firebase/firestore', () => ({
   collection: jest.fn(),
@@ -41,14 +39,9 @@ describe('RescheduleBooking', () => {
       docs: [{ ref: 'mockRef1' }, { ref: 'mockRef2' }],
     });
 
-//This helps synchronize the component's behavior with the testing environment for accurate and reliable test results.
-
     await act(async () => {
       render(<RescheduleBooking />);
     });
-
-
-//These assertions help ensure that the code being tested correctly interacts with the mock functions and variables, providing confidence that the tested functionality behaves as intended.    
 
     expect(collection).toHaveBeenCalledWith(expect.anything(), 'bookedEvents');
     expect(where).toHaveBeenCalledWith('cancelId', '==', mockCancelId);

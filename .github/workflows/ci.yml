@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - sprint3
+      - sprint4
   pull_request:
     branches:
-      - sprint3
+      - sprint4
 
 jobs:
   build:

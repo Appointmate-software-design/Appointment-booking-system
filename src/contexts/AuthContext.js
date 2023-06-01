@@ -1,9 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { auth, googleProvider } from "../firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,signInWithPopup} from 'firebase/auth'
 
 // create an auth context
 export const AuthContext = React.createContext();
+
+function googleSignin() {
+  return signInWithPopup(auth, googleProvider);
+}
 
 // create a custom hook to access the auth context
 export function useAuth() {
@@ -43,7 +47,8 @@ export function AuthProvider({ children }) {
     currentUser,
     signup,
     login,
-    logout
+    logout,
+    googleSignin,
   };
 
   // render the AuthContext.Provider and only display children when loading is false

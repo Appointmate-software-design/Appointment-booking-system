@@ -1,23 +1,31 @@
 // Importing necessary modules
 import React, { useRef, useState } from 'react';
-import { Container, Alert} from 'react-bootstrap';
+import { Card, Form, Button, Alert, Container } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Title from './Title';
-import './SignUp.css'
-import usePasswordToggle from './usePasswordToggle';
 
 // Sign up component
 export default function SignUp() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup, currentUser } = useAuth();
+  const { signup, currentUser, googleSignin } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
+//handles google sign in 
+async function handleGoogleSignup() {
+  try {
+    setError('');
+    setLoading(true);
+    await googleSignin();
+    navigate('/');
+  } catch (error) {
+    setError('Failed to sign up with Google');
+  }
+  setLoading(false);
+}
   // Handles form submission
   async function handleSubmit(e) {
     e.preventDefault();
@@ -51,41 +59,35 @@ export default function SignUp() {
   return (
     <>
       <Title />
-      <Container className="container">
-        <div className="signup-container">
-              <h2 className="signup-text">Sign Up</h2>
+      <Container className="d-flex align-Items-center justify-content-center" style={{ minHeight: '100vh' }}>
+        <div className="w-100 mt-5" style={{ maxWidth: '400px' }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Sign Up</h2>
               {error && <Alert variant="danger">{error}</Alert>}
-              <form className='signup-form' onSubmit={handleSubmit}>
-                <button className='signup-google'
-                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-                >
-                  <span className='btn-content'>
-                    <img className='google' src={process.env.PUBLIC_URL + '/google.svg'}></img>
-                    SignUp with Google
-                  </span>
-                </button>
-                <hr className='hr-text' data-content='OR'></hr>
-                  <label htmlFor='email'>Email</label>
-                  <input type="email" ref={emailRef} id="email" placeholder='Email address'></input>
-                  <label htmlFor="password">Password</label>
-                  <div className='password-wrapper'>
-                    <input type= {PasswordInputType} ref={passwordRef} id="password" placeholder='Password'></input>
-                    <span className="passwordIcon">{ToggleIcon}</span>
-                  </div>
-                  <label htmlFor="password-confirm">Cornfirm password</label>
-                  <div className='password-wrapper'>
-                    <input type={PasswordInputType} ref={passwordConfirmRef} id="password-confirm" placeholder='Password'></input>
-                    <span className="passwordIcon">{ToggleIcon}</span>
-                  </div>
-                <button disabled={loading} className="signup-btn" type="submit"
-                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-                >
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="emailFormGroup">
+                  <Form.Label htmlFor="email">Email</Form.Label>
+                  <Form.Control type="email" ref={emailRef} id="email"></Form.Control>
+                </Form.Group>
+                <Form.Group controlId="passwordFormGroup">
+                  <Form.Label htmlFor="password">Password</Form.Label>
+                  <Form.Control type="password" ref={passwordRef} id="password"></Form.Control>
+                </Form.Group>
+                <Form.Group controlId="passwordConfirmFormGroup">
+                  <Form.Label htmlFor="password-confirm">Password Confirmation</Form.Label>
+                  <Form.Control type="password" ref={passwordConfirmRef} id="password-confirm"></Form.Control>
+                </Form.Group>
+                <Button disabled={loading} className="w-100 mt-3" type="submit">
                   Sign Up
-                </button>
-              </form>
-          <div className="lnk-text">
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Button disabled={loading} className="w-100 mt-3" onClick={handleGoogleSignup}>
+          Sign Up with Google
+        </Button>
+          <div className="w-100 text-center mt-2" style={{ color: 'blue' }}>
             Already have an Account? <Link to="/login">Log In</Link>
           </div>
         </div>

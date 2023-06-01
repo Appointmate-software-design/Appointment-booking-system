@@ -36,10 +36,16 @@ export default function EventList() {
     <div className='events-list'>
     <div style={{ display: 'flex', justifyContent: 'center' }}>
     </div>
-      <button className='createEvent-btn' aria-label="Create New Event" onClick={() => { navigate('create-event') }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-            onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-      > + Create New Event</button> {/* this button navigates to the /create-event route, where we are shown a form and can create an event */}
+      <button style={{
+          backgroundColor: 'dodgerblue',
+          color: 'black',
+          fontSize: '18px',
+          padding: '10px 20px',
+          marginTop: '20px',
+          marginLeft: '20px',
+          marginBottom: '20px',
+          border: '2px solid cyan',
+          borderRadius: '10px'}} aria-label="Create New Event" onClick={() => { navigate('create-event') }}>Create New Event</button> {/* this button navigates to the /create-event route, where we are shown a form and can create an event */}
           {loading && (
             <div className="loading">
               <ClipLoader size={60} color="#123abc" loading={loading} />
@@ -49,7 +55,8 @@ export default function EventList() {
       <ul>{events?.map((event) => {
         const eventData = event.data()
         
-        return <EventCard eventData={{...eventData, id:event.id}}  // Rendering EventCard component with the event data
+        // Rendering EventCard component with the event data
+        return <EventCard eventData={{...eventData, id:event.id}}  
         />
       })}</ul>
       
