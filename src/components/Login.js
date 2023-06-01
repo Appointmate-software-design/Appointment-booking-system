@@ -22,7 +22,8 @@ export default function Login() {
   const [error,setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  //function to handle google log in
+  //function to handle google logIn asynchronously. 
+  //It sets the appropriate loading and error states, calls the googleSignin() function, navigates to the homepage if successful, and handles any errors that occur during the process.
 
   async function handleGoogleLogin() {
     try {
