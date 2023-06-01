@@ -202,6 +202,11 @@ export default function Home() {
         zIndex: 1000 // This ensures the modal content appears above everything else
       }
     }}
+
+
+// the code below represents a form or modal component for changing passwords. 
+//It captures the old password, new password, and confirm new password, and provides buttons for submitting the form or closing the modal.
+
     contentLabel="Change Password"
   >
       <h3>Change Password</h3>
@@ -224,5 +229,8 @@ export default function Home() {
     </Modal>
     </div>
     
+//<input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required /> 
+//- This line displays an input field of type "password" for the user's old password.
+
   )
 }
