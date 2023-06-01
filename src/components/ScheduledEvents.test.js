@@ -30,7 +30,7 @@ describe('ScheduledEvents', () => {
   });
 //test the rendering of the date picker
   it('renders the DatePicker', () => {
-    const datePickerElement = screen.getByText(/Please select a date range:/i);
+    const datePickerElement = screen.getByText(/Or view bookings within a specified date range:/i);
     expect(datePickerElement).toBeInTheDocument();
   });
 //test the rendering of the cancel meeting button

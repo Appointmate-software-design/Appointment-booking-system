@@ -103,14 +103,6 @@ test('opens and closes password change modal', () => {
     { providerProps }
   );
 
-
-/*
-The provided code snippet demonstrates a test scenario using the React Testing Library. 
-It retrieves a button element with the text "Change Password," simulates a user clicking on it, and then asserts that the text "Change Password" is still present in the rendered screen. 
-This test verifies the expected behavior and UI updates of the component when the button is clicked.
-*/
-
-
   const changePasswordButton = screen.getByText(/Change Password/i);
   userEvent.click(changePasswordButton);
   expect(screen.getByText(/Change Password/i)).toBeInTheDocument();

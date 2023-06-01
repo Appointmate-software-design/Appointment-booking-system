@@ -1,11 +1,9 @@
 .EventCard {
-  border: none;
-  border-radius: 10px;
-  padding: 15px;
-  box-sizing: border-box;
-  position: relative;
-  background-color: #ffffff;
-  box-shadow:1px 2px 3px 0px rgba(0, 0, 0, 0.5) ;
+    border: 2px solid teal;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+
   }
   
   .EventCard ul {
@@ -31,11 +29,10 @@
 
   .delete-button {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
-    background-color: rgba(82, 82, 213, 0.9);
-    border: none;
-    border-radius: 7px;
+    bottom: 5px;
+    right: 5px;
+    background-color: steelblue;
+    border-radius: 5px;
     width: 80px;
     height: 30px;
     display: flex;
@@ -45,46 +42,10 @@
     font-weight: normal;
   }
   
-  .link-btn{
-    bottom: 15px;
-    left: 15px;
-    background-color: rgba(82, 82, 213, 0.9);
-    border: none;
-    border-radius: 5px;
-    width: 100px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: normal;
+  .delete-button:before {
+    content: 'X ';
+    color: red;
+    font-weight: bold;
   }
   
-  .copyLink-btn{
-    color: white;
-    background-color: rgba(82, 82, 213, 0.8);
-    border: none;
-    border-radius: 3px;
-    padding: 3px 7px;
-    margin-right: 1em;
-  }
-
-  .hide-btn{
-    color: white;
-    background-color: rgba(82, 82, 213, 0.9);
-    border: none;
-    border-radius: 3px;
-    padding: 3px 7px;
-  }
-
-.card-title{
-  font-size: x-large;
-  font-weight: bold;
-  color: rgb(48, 35, 35);
-}
-
-.card-descript, .duration, .dates{
-  font-size: large;
-  font-weight:normal ;
-  color:#7c7373;
-}
+  

@@ -14,7 +14,6 @@ import ThankYouModal from "./ThankYouModal";
 import emailjs from "emailjs-com";
 import AvailableTimeSlots from './AvailableTimeSlots'; // check for booked time slots so that meetings cannot clash
 import { v4 as uuidv4 } from 'uuid'; // Import the UUID package at the top of the file
-import './ConfirmBooking.css'
 
 //import calculated time slots
 const { calculateTimeSlots } = AvailableTimeSlots;
@@ -56,8 +55,6 @@ export default function ConfirmBookingView() {
       </div>
     </>
   }
-
-  //if the "event" variable is false then the error message is rendered.
   if (!event) {
     return <p>there was an error getting event</p>;
   }
@@ -72,12 +69,13 @@ export default function ConfirmBookingView() {
     }
   };
 
+  //function that handles the booking for process for reccuring meetings
 
   const handleRecurringConfirm = () => {
-    let currentDate = new Date(selectedDate); // Get the current date from the selectedDate
-    const endDate = new Date(event.endDate);// Get the end date of the recurring period
-    const selectedDay = selectedDate.getDay();// Get the day of the week for the selectedDate
-  // If the current day matches the selected day of the week
+    let currentDate = new Date(selectedDate);
+    const endDate = new Date(event.endDate);
+    const selectedDay = selectedDate.getDay();
+  
     while (currentDate <= endDate) {
       if (currentDate.getDay() === selectedDay) {
         handleConfirmBooking(new Date(currentDate), true);
@@ -86,7 +84,7 @@ export default function ConfirmBookingView() {
         currentDate.setDate(currentDate.getDate() + 1);
       }
     }
-  //functionwill e called to check the date
+  
     setRecurringModal(false);
   };
   
@@ -157,8 +155,8 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
           eventTitle: event.title,
           eventDescription: event.description,
           hostName: currentUser.displayName || currentUser.email,
-          cancellationLink: `http://localhost:3000/cancel/${cancelId}`, // Replace with your actual domain
-          reschedulingLink: `http://localhost:3000/reschedule/${cancelId}/${eventId}`
+          cancellationLink: `https://appointmate-826f0.web.app/cancel/${cancelId}`, // Replace with your actual domain
+          reschedulingLink: `https://appointmate-826f0.web.app/reschedule/${cancelId}/${eventId}`
         },
         "-U8Z9iJC2NXirC-38"
         
@@ -172,9 +170,8 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
   
 
   return (
-    <div >
+    <div>
       <Title/>
-      <div className="bookingForm">
       <h2>Meeting Details:</h2>
       <div>Title: {event.title} </div>
       <div>Description: {event.description} </div>
@@ -182,16 +179,16 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
       <label>
         <h5>Enter your details: </h5>
         <span>Email:</span>
-        <input type="text" id="email" placeholder="Email address" className="emailBox"/>
+        <input type="text" id="email" />
       </label>
-      <p> </p>
       <label>
         <span>Name:</span>
-        <input type="text" id="name" placeholder="Name" className="nameBox"/>
+        <input type="text" id="name" />
       </label>
       <div></div>
       <label>
-        <span>Recurring:</span><input 
+        <span>Recurring:</span>
+        <input 
           type="checkbox"
           onChange={(e) => setRecurring(e.target.checked)}
           checked={recurring}
@@ -207,10 +204,8 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
         startDate={new Date(event.startDate)}
         endDate={new Date(event.endDate)}
       />
-    </div>
 {/* if a day is selected, check if it is in the meeting schedule, if it is then show the relevant time slots, otherwise say "The day selected is not in the meeting schedule"  */}
 {/*The AvailableTimeSlots component also checks if the time slot has been booked before displaying it */}
-  <div className="slots">
   {selectedDate && availableTimes ? (
     <AvailableTimeSlots
     host={event.host}
@@ -228,21 +223,26 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
   />
   
   ) : (
-    selectedDate && <p className="paragraph">The day selected is not in the meeting schedule</p>
+    selectedDate && <p>The day selected is not in the meeting schedule</p>
   )}
 
 
 {selectedDate && availableTimes && (
   availableSlots.length > 0 ? (
-    <button className="confirm-btn"
-    onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-      onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
+    <button
+      style={{
+        backgroundColor: 'teal',
+        color: 'white',
+        borderRadius: '5px',
+        marginTop: '10px',
+        marginLeft: '10px',
+      }}
       onClick={() => handleConfirmBooking()}
     >
       Confirm booking
     </button>
   ) : (
-    <p className="p2">No time slots left for this day.</p>
+    <p>No time slots left for this day.</p>
   )
 )}
 
@@ -272,9 +272,8 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
   <div style={{display: 'flex', justifyContent: 'space-between'}}>
     <button style={{backgroundColor: 'steelblue', color: 'white'}} onClick={handleRecurringConfirm}>Confirm Recurring Booking</button>
     <button style={{backgroundColor: 'steelblue', color: 'white'}} onClick={() => setRecurringModal(false)}>Close</button>
-  </div> 
+  </div>
 </Modal>
-</div>
 {/* Add the ThankYouModal component */}
 <ThankYouModal
   isOpen={isModalOpen}
@@ -289,7 +288,7 @@ const handleConfirmBooking = (date = selectedDate, isRecurring = false) => {
       
 
         {!selectedDate && 
-        <p className="p3">No date selected</p>}
+        <p>no date selected</p>}
 
     </div>
   );

@@ -1,11 +1,9 @@
 // Import the necessary React components and hooks for the login form
 import React, {useRef, useState } from 'react'
-import {Alert} from 'react-bootstrap'
+import {Card, Form, Button,Alert,Container } from 'react-bootstrap'
 import{useAuth} from '../contexts/AuthContext'
 import{Link, useNavigate} from 'react-router-dom';
 import Title from './Title';
-import './Login.css';
-import usePasswordToggle from './usePasswordToggle';
 
 // Define a functional component for the login form
 export default function Login() {
@@ -18,14 +16,25 @@ export default function Login() {
   const navigate = useNavigate()
 
   // Access the "authentication" context of the app using the "useAuth" hook
-  const {login, currentUser} = useAuth()
+  const { login, currentUser, googleSignin } = useAuth();
 
   // Define two state variables using the "useState" hook
   const [error,setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+  //function to handle google log in
 
+  async function handleGoogleLogin() {
+    try {
+      setError('');
+      setLoading(true);
+      await googleSignin();
+      navigate('/');
+    } catch (error) {
+      setError('Failed to log in with Google');
+    }
+    setLoading(false);
+  }
   // Define an asynchronous function named "handleSubmit" that will handle the form submission event
   async function handleSubmit(e) {
     e.preventDefault()
@@ -56,43 +65,39 @@ export default function Login() {
   return (
     <>
       <Title/> {/* Render a component for the title of the login page */}
-        <div className='container'>
-              <h2 className="login-text">Log In</h2>
+      <Container className="d-flex align-Items-center justify-content-center" style={{ minHeight: "100vh"}}>
+        <div className="w-100 mt-5" style={{ maxWidth: "400px" }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Log In</h2>
               {/* Display any error messages that may have occurred during login */}
               {error && <Alert variant='danger'>{error}</Alert>}
               {/* Define the login form with email and password input fields */}
-              <div className='form-container'>
-              <form className='login-form' onSubmit={handleSubmit}>
-                <button className='google-login'
-                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-                >
-                  <span className='gIcon'>
-                    <img className='google' src={process.env.PUBLIC_URL + '/google.svg'}></img>
-                    Continue with Google
-                  </span>
-                </button>
-                  <hr className='hr-text' data-content="OR"></hr>
-                <input type="email" ref={emailRef} id="email" placeholder='Email address' required />
-                <br></br>
-                <div className='password-wrapper'>
-                  <input type={PasswordInputType} ref={passwordRef} id="password" className='passInput' placeholder='Password' required />
-                  <span className="passwordIcon">{ToggleIcon}</span>
-                </div>
+              <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="emailFormGroup">
+                <Form.Label htmlFor="email">Email</Form.Label>
+                <Form.Control type="email" ref={emailRef} id="email" required />
+              </Form.Group>
+              <Form.Group controlId="passwordFormGroup">
+                <Form.Label htmlFor="password">Password</Form.Label>
+                <Form.Control type="password" ref={passwordRef} id="password" required />
+              </Form.Group>
 
-                <br></br>
                 {/* Disable the login button while the login attempt is in progress */}
-                <button disabled={loading} className="login-btn" type="submit"
-                  onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-                >Log In</button>
-              </form>
+                <Button disabled={loading} className="w-100 mt-3" type="submit">Log In</Button>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Button disabled={loading} className="w-100 mt-3" onClick={handleGoogleLogin}>
+          Log In with Google
+          </Button>
+
           {/* Display a link to the signup page */}
-          <div className='signup-lnk'>
+          <div className='w-100 text-center mt-2' style={{ color: 'blue' }}>
             Need an Account? <Link to="/signup">Sign up</Link>
           </div>
-          </div>
         </div>
+      </Container>
     </>
   )
 }

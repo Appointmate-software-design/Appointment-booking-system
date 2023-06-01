@@ -7,8 +7,6 @@ import ScheduledEvents from './ScheduledEvents';
 import EventList from './EventList';
 import Modal from 'react-modal';
 import { reauthenticateWithCredential, EmailAuthProvider, getAuth, updatePassword } from 'firebase/auth';
-import './Home.css'
-import usePasswordToggle from './usePasswordToggle';
 
 
 // This file contains the Home component which has two buttons, "Scheduled Events" and "Events" and keeps track of which one is active
@@ -25,7 +23,6 @@ export default function Home() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   async function handleLogout() {
     setError('')
@@ -92,37 +89,61 @@ export default function Home() {
 
   // Styles for the two buttons
   const buttonStyles = {
-    backgroundColor: activeButton === 'events' ? 'rgba(82, 82, 213, 0.9)' : 'white',
-    color: activeButton === 'events' ? 'white' : 'rgb(124, 115, 115)'
+    padding: '10px 20px',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    border: 'none',
+    borderRadius: '5px',
+    marginRight: '20px',
+    backgroundColor: activeButton === 'events' ? 'teal' : 'white',
+    color: activeButton === 'events' ? 'white' : 'black'
   };
 
   const scheduledButtonStyles = {
-    backgroundColor: activeButton === 'scheduled' ? 'rgba(82, 82, 213, 0.9)' : 'white',
-    color: activeButton === 'scheduled' ? 'white' : 'rgb(124, 115, 115)'
+    padding: '10px 20px',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    border: 'none',
+    borderRadius: '5px',
+    backgroundColor: activeButton === 'scheduled' ? 'teal' : 'white',
+    color: activeButton === 'scheduled' ? 'white' : 'black'
   };
 
   // The return statement defines the layout and style of the home page
   return (
     <div>
       <Title />
-      <h2 className='welcomeText'>Welcome {currentUser.email}</h2>
-      <div>
-        <button className='events-btn' style={buttonStyles} onClick={() => {
+      <h2>Welcome {currentUser.email}</h2>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <button style={buttonStyles} onClick={() => {
           setActiveButton('events');
           setShowEvents(true);
           setShowScheduled(false);
         }}>Events</button>
-        <button className='scheduled-btn' style={scheduledButtonStyles} onClick={() => {
+        <button style={scheduledButtonStyles} onClick={() => {
           setActiveButton('scheduled');
           setShowScheduled(true);
           setShowEvents(false);
         }}>Scheduled Events</button>
-        <hr className='line'></hr>
       </div>
 
-      <button className='logout-btn' onClick={handleLogout}
-        onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-        onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.7)')}
+      <button onClick={handleLogout}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: 'teal',
+          color: 'white',
+          padding: '10px 20px',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          boxShadow: '1px 1px 2px grey',
+          marginBottom: '20px',
+          marginRight: '20px'
+        }}
+        onMouseOver={(e) => (e.target.style.backgroundColor = '#008080')}
+        onMouseOut={(e) => (e.target.style.backgroundColor = 'teal')}
 
       >
         Log Out
@@ -131,8 +152,22 @@ export default function Home() {
       {/* The ScheduledEvents and EventList components are conditionally rendered based on the active button */}
       {showScheduled && <ScheduledEvents />}
       {showEvents && <EventList />}
-      <button className='password-btn'
+      <button
         onClick={() => setIsChangePasswordModalOpen(true)}
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          backgroundColor: 'teal',
+          color: 'white',
+          padding: '10px 20px',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          boxShadow: '1px 1px 2px grey',
+          marginBottom: '20px',
+          marginRight: '20px'
+        }}
         onMouseOver={(e) => (e.target.style.backgroundColor = '#008080')}
         onMouseOut={(e) => (e.target.style.backgroundColor = 'teal')}
       >
@@ -158,7 +193,7 @@ export default function Home() {
       content: {
         position: 'relative',
         backgroundColor: 'white',
-        borderRadius: '8px',
+        borderRadius: '4px',
         padding: '20px',
         outline: 'none',
         width: '80%',
@@ -172,31 +207,19 @@ export default function Home() {
       <form onSubmit={handleChangePassword}>
         <label>
           Old Password:
-          <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className='oldPasword' required />
+          <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
         </label>
         <label>
           New Password:
-          <div className='password-wrapper'>
-            <input type={PasswordInputType} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-            <span className="passwordIcon">{ToggleIcon}</span>
-          </div>
+          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
         </label>
         <label>
           Confirm New Password:
-          <div className='password-wrapper'>
-            <input type={PasswordInputType} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
-            <span className="passwordIcon">{ToggleIcon}</span>
-          </div>
+          <input type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
         </label>
-        <button type="submit" className='modalcpassword'
-          onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-          onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-        >Change Password</button>
+        <button type="submit">Change Password</button>
       </form>
-      <button onClick={() => setIsChangePasswordModalOpen(false)} className='modalclose'
-        onMouseOver={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 1)')}
-        onMouseOut={(e) => (e.target.style.backgroundColor = 'rgba(82, 82, 213, 0.9)')}
-      >Close</button>
+      <button onClick={() => setIsChangePasswordModalOpen(false)}>Close</button>
     </Modal>
     </div>
     
