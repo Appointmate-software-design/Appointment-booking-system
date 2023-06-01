@@ -46,6 +46,7 @@ export default function Home() {
       return;
     }
 
+    //checks that the password is at least 6 characters long.
     if (newPassword.length < 6) {
       alert("New password must be at least 6 characters long.");
       return;
