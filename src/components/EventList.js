@@ -55,7 +55,8 @@ export default function EventList() {
       <ul>{events?.map((event) => {
         const eventData = event.data()
         
-        return <EventCard eventData={{...eventData, id:event.id}}  // Rendering EventCard component with the event data
+        // Rendering EventCard component with the event data
+        return <EventCard eventData={{...eventData, id:event.id}}  
         />
       })}</ul>
       
