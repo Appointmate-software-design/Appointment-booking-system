@@ -19,7 +19,7 @@ export default function EventCard({ eventData }) {
     await handleDelete();
     navigate("/create-event", { state: { eventData: eventData } });
   };
-
+// Defining CSS styles for the cards
   const cardStyles = {
     maxWidth: '400px',
     transition: 'transform 0.3s',
