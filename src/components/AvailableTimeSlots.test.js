@@ -32,7 +32,7 @@ const setup = (overrides) => {
   };
 
   const props = { ...defaultProps, ...overrides };
-  return render(<AvailableTimeSlots {...props} />);
+  return render(<AvailableTimeSlots {...props} />); //checks for available times
 };
 
 // Main test suite for AvailableTimeSlots component
