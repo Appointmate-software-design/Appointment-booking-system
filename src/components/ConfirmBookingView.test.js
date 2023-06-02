@@ -50,7 +50,7 @@ const mockEvent = {
     },
   ],
 };
-
+//Mocking Current user assigned
 const mockCurrentUser = {
   uid: 'test-user-id',
   email: 'test@test.com',
