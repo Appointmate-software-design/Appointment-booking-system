@@ -38,7 +38,7 @@ const setup = (overrides) => {
 // Main test suite for AvailableTimeSlots component
 describe('AvailableTimeSlots', () => {
   test('renders available time slots', () => {
-    const handleSlotChange = jest.fn();
+    const handleSlotChange = jest.fn();//configures slot changes
 
     setup({
       availableSlots: [
