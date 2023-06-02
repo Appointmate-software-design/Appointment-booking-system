@@ -24,7 +24,7 @@ jest.mock('../firebase', () => ({
 }));
 
 describe('CancelBooking', () => {
-  //test to see if component renders correctly and calls correct functions to the database.
+  //test to see if component renders correctly and calls the correct functions to the database.
   it('renders successfully and calls firestore functions', async () => {
     const mockCancelId = '12345';
     useParams.mockReturnValue({ cancelId: mockCancelId });
